@@ -1,35 +1,63 @@
 @extends('layouts.public')
 @section('title', 'Prestasi - SMA Negeri 1 Marangkayu')
+
 @section('content')
-<div class="breadcrumb-section py-3"><div class="container">
-    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-        <li class="breadcrumb-item active">Prestasi</li>
-    </ol></nav>
-</div></div>
-<section class="py-5"><div class="container">
-    <h2 class="section-title mb-4">Prestasi Sekolah</h2>
-    <div class="row g-4">
-        @forelse($prestasi as $p)
-        <div class="col-md-4" data-aos="fade-up">
-            <div class="card border-0 shadow-sm h-100">
+<div class="bg-slate-50 border-b border-slate-200 py-3">
+    <div class="container mx-auto max-w-7xl px-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+            <span class="text-gray-800 font-medium">Prestasi</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-14">
+    <div class="container mx-auto max-w-7xl px-4">
+        <div class="text-center mb-12">
+            <h1 class="section-title mx-auto after:mx-auto">Prestasi Sekolah</h1>
+            <p class="text-gray-500 mt-3">Pencapaian terbaik SMA Negeri 1 Marangkayu</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @forelse($prestasi as $p)
+            <div class="card-hover group">
                 @if($p->foto)
-                <img src="{{ Storage::url($p->foto) }}" class="card-img-top" style="height:160px;object-fit:cover" alt="{{ $p->judul }}">
+                <div class="overflow-hidden h-40">
+                    <img src="{{ Storage::url($p->foto) }}"
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                         alt="{{ $p->judul }}">
+                </div>
+                @else
+                <div class="h-40 flex items-center justify-center" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light))">
+                    <i class="fa-solid fa-trophy text-4xl text-yellow-400"></i>
+                </div>
                 @endif
-                <div class="card-body">
-                    <span class="badge mb-2" style="background:var(--secondary)">{{ ucfirst($p->tingkat) }}</span>
-                    <span class="badge bg-info mb-2">{{ ucfirst(str_replace('_', ' ', $p->kategori)) }}</span>
-                    <h6 class="fw-bold">{{ $p->judul }}</h6>
-                    @if($p->peraih)<p class="small text-muted mb-1"><i class="bi bi-person me-1"></i>{{ $p->peraih }}</p>@endif
-                    <p class="small text-muted"><i class="bi bi-calendar me-1"></i>{{ $p->tahun }}</p>
-                    @if($p->deskripsi)<p class="small">{{ Str::limit($p->deskripsi, 80) }}</p>@endif
+                <div class="p-4">
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge badge-accent">{{ ucfirst($p->tingkat) }}</span>
+                        <span class="badge bg-blue-100 text-blue-700">{{ ucfirst(str_replace('_',' ',$p->kategori)) }}</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm mb-1 leading-snug">{{ $p->judul }}</h3>
+                    @if($p->peraih)
+                    <p class="text-xs text-gray-500 flex items-center gap-1.5 mb-1">
+                        <i class="fa-solid fa-user text-slate-400"></i> {{ $p->peraih }}
+                    </p>
+                    @endif
+                    <p class="text-xs text-gray-400 flex items-center gap-1.5">
+                        <i class="fa-regular fa-calendar text-slate-400"></i> {{ $p->tahun }}
+                    </p>
                 </div>
             </div>
+            @empty
+            <div class="col-span-4 text-center text-gray-400 py-16">
+                <i class="fa-solid fa-trophy text-4xl mb-3 block text-slate-300"></i>
+                Data prestasi belum tersedia.
+            </div>
+            @endforelse
         </div>
-        @empty
-        <div class="col-12 text-muted text-center py-5">Data prestasi belum tersedia.</div>
-        @endforelse
+
+        <div class="mt-8">{{ $prestasi->links() }}</div>
     </div>
-    <div class="mt-4">{{ $prestasi->links() }}</div>
-</div></section>
+</section>
 @endsection

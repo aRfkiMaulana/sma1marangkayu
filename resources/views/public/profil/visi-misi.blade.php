@@ -2,41 +2,59 @@
 @section('title', 'Visi & Misi - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<div class="breadcrumb-section py-3">
-    <div class="container">
-        <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item active">Visi &amp; Misi</li>
-        </ol></nav>
+<div class="bg-slate-50 border-b border-slate-200 py-3">
+    <div class="container mx-auto max-w-7xl px-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+            <span class="text-gray-800 font-medium">Visi &amp; Misi</span>
+        </nav>
     </div>
 </div>
-<section class="py-5">
-    <div class="container">
-        <h2 class="section-title mb-5">Visi &amp; Misi</h2>
-        <div class="row g-4">
-            <div class="col-md-6" data-aos="fade-right">
-                <div class="p-4 rounded-3 h-100" style="background:var(--primary);color:#fff">
-                    <i class="bi bi-eye fs-2 mb-3" style="color:var(--secondary)"></i>
-                    <h4 class="fw-bold mb-3" style="color:var(--secondary)">VISI</h4>
-                    <p class="mb-0" style="line-height:1.9">{{ $profil->visi ?? 'Belum diisi.' }}</p>
-                </div>
-            </div>
-            <div class="col-md-6" data-aos="fade-left">
-                <div class="p-4 rounded-3 h-100" style="background:var(--light-bg)">
-                    <i class="bi bi-list-check fs-2 mb-3" style="color:var(--primary)"></i>
-                    <h4 class="fw-bold mb-3" style="color:var(--primary)">MISI</h4>
-                    <div style="white-space:pre-line;line-height:1.9">{{ $profil->misi ?? 'Belum diisi.' }}</div>
-                </div>
-            </div>
-            @if($profil && $profil->tujuan)
-            <div class="col-12" data-aos="fade-up">
-                <div class="p-4 rounded-3" style="background:var(--light-bg)">
-                    <h5 class="fw-bold mb-3" style="color:var(--primary)"><i class="bi bi-bullseye me-2"></i>TUJUAN</h5>
-                    <div style="white-space:pre-line;line-height:1.9">{{ $profil->tujuan }}</div>
-                </div>
-            </div>
-            @endif
+
+<section class="py-14">
+    <div class="container mx-auto max-w-7xl px-4">
+        <div class="text-center mb-12">
+            <h1 class="section-title mx-auto after:mx-auto">Visi &amp; Misi</h1>
+            <p class="text-gray-500 mt-3">SMA Negeri 1 Marangkayu</p>
         </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+            {{-- VISI --}}
+            <div class="rounded-2xl p-8 text-white flex flex-col"
+                 style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light))">
+                <div class="w-14 h-14 rounded-2xl mb-5 flex items-center justify-center text-2xl"
+                     style="background-color: rgba(255,255,255,0.15)">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <h2 class="text-xl font-bold tracking-wide mb-4" style="color: var(--color-accent)">VISI</h2>
+                <p class="text-white/85 leading-relaxed">{{ $profil->visi ?? 'Belum diisi.' }}</p>
+            </div>
+
+            {{-- MISI --}}
+            <div class="rounded-2xl p-8 bg-white shadow-sm border border-slate-100 flex flex-col">
+                <div class="w-14 h-14 rounded-2xl mb-5 flex items-center justify-center text-2xl"
+                     style="background-color: #dbeafe; color: var(--color-primary)">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <h2 class="text-xl font-bold tracking-wide mb-4" style="color: var(--color-primary)">MISI</h2>
+                <div class="text-gray-600 leading-relaxed text-sm whitespace-pre-line">{{ $profil->misi ?? 'Belum diisi.' }}</div>
+            </div>
+        </div>
+
+        {{-- TUJUAN --}}
+        @if($profil && $profil->tujuan)
+        <div class="rounded-2xl p-8 bg-white shadow-sm border border-slate-100">
+            <div class="flex items-center gap-4 mb-5">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                     style="background-color: #fef3c7; color: var(--color-accent)">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <h2 class="text-xl font-bold" style="color: var(--color-primary)">TUJUAN</h2>
+            </div>
+            <div class="text-gray-600 leading-relaxed whitespace-pre-line">{{ $profil->tujuan }}</div>
+        </div>
+        @endif
     </div>
 </section>
 @endsection

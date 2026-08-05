@@ -2,49 +2,67 @@
 @section('title', 'Galeri - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<div class="breadcrumb-section py-3">
-    <div class="container">
-        <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item active">Galeri</li>
-        </ol></nav>
+<div class="bg-slate-50 border-b border-slate-200 py-3">
+    <div class="container mx-auto max-w-7xl px-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+            <span class="text-gray-800 font-medium">Galeri</span>
+        </nav>
     </div>
 </div>
-<section class="py-5">
-    <div class="container">
-        <h2 class="section-title mb-4">Galeri Foto &amp; Video</h2>
 
+<section class="py-14">
+    <div class="container mx-auto max-w-7xl px-4">
+        <div class="text-center mb-10">
+            <h1 class="section-title mx-auto after:mx-auto">Galeri Foto &amp; Video</h1>
+            <p class="text-gray-500 mt-3">Dokumentasi kegiatan SMA Negeri 1 Marangkayu</p>
+        </div>
+
+        {{-- FILTER ALBUM --}}
         @if($album->count())
-        <div class="mb-4 d-flex flex-wrap gap-2">
-            <a href="{{ route('galeri.index') }}" class="btn btn-sm btn-primary-custom">Semua</a>
+        <div class="flex flex-wrap gap-2 justify-center mb-8">
+            <a href="{{ route('galeri.index') }}"
+               class="px-4 py-1.5 rounded-full text-sm font-medium transition-colors text-white"
+               style="background-color: var(--color-primary)">
+                Semua
+            </a>
             @foreach($album as $a)
-            <a href="{{ route('galeri.album', $a) }}" class="btn btn-sm btn-outline-primary">{{ $a }}</a>
+            <a href="{{ route('galeri.album', $a) }}"
+               class="px-4 py-1.5 rounded-full text-sm font-medium border border-slate-300 text-gray-600 hover:border-blue-800 hover:text-blue-800 transition-colors">
+                {{ $a }}
+            </a>
             @endforeach
         </div>
         @endif
 
-        <div class="row g-3">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             @forelse($galeri as $g)
-            <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in">
-                <div class="galeri-item position-relative">
-                    @if($g->tipe === 'foto')
-                    <img src="{{ Storage::url($g->file) }}" class="img-fluid rounded w-100" style="height:200px;object-fit:cover" alt="{{ $g->judul }}">
-                    @else
-                    <div class="position-relative">
-                        <img src="https://placehold.co/400x300/1a3d6e/fff?text=Video" class="img-fluid rounded w-100" style="height:200px;object-fit:cover" alt="{{ $g->judul }}">
-                        <div class="position-absolute top-50 start-50 translate-middle">
-                            <i class="bi bi-play-circle-fill text-white fs-1"></i>
-                        </div>
-                    </div>
-                    @endif
-                    <div class="mt-1 small text-muted">{{ Str::limit($g->judul, 40) }}</div>
+            <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer"
+                 @if($g->tipe === 'video') onclick="window.open('{{ $g->file }}','_blank')" @endif>
+                <img src="{{ $g->tipe === 'foto' ? Storage::url($g->file) : 'https://placehold.co/400x400/1a3d6e/fff?text=Video' }}"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                     alt="{{ $g->judul }}">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                    <p class="text-white text-xs font-medium line-clamp-2">{{ $g->judul }}</p>
                 </div>
+                @if($g->tipe === 'video')
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-full bg-white/80 flex items-center justify-center">
+                        <i class="fa-solid fa-play text-blue-800 ml-1"></i>
+                    </div>
+                </div>
+                @endif
             </div>
             @empty
-            <div class="col-12 text-muted text-center py-5">Galeri masih kosong.</div>
+            <div class="col-span-4 text-center text-gray-400 py-16">
+                <i class="fa-solid fa-images text-4xl mb-3 block text-slate-300"></i>
+                Galeri masih kosong.
+            </div>
             @endforelse
         </div>
-        <div class="mt-4">{{ $galeri->links() }}</div>
+
+        <div class="mt-8">{{ $galeri->links() }}</div>
     </div>
 </section>
 @endsection

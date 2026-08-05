@@ -2,116 +2,140 @@
 @section('title', 'Kontak - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<div class="breadcrumb-section py-3">
-    <div class="container">
-        <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item active">Kontak</li>
-        </ol></nav>
+<div class="bg-slate-50 border-b border-slate-200 py-3">
+    <div class="container mx-auto max-w-7xl px-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+            <span class="text-gray-800 font-medium">Kontak</span>
+        </nav>
     </div>
 </div>
-<section class="py-5">
-    <div class="container">
-        <h2 class="section-title mb-4">Hubungi Kami</h2>
+
+<section class="py-14">
+    <div class="container mx-auto max-w-7xl px-4">
+        <div class="text-center mb-12">
+            <h1 class="section-title mx-auto after:mx-auto">Hubungi Kami</h1>
+            <p class="text-gray-500 mt-3">Kami siap membantu pertanyaan Anda</p>
+        </div>
 
         @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="flex items-start gap-3 bg-green-50 border border-green-200 text-green-800 rounded-xl px-5 py-4 mb-8">
+            <i class="fa-solid fa-circle-check mt-0.5 text-green-500"></i>
+            <p class="text-sm">{{ session('success') }}</p>
         </div>
         @endif
 
-        <div class="row g-5">
+        <div class="grid lg:grid-cols-5 gap-8">
             {{-- INFO KONTAK --}}
-            <div class="col-lg-5">
-                <div class="card border-0 shadow-sm p-4 h-100">
-                    <h5 class="fw-bold mb-4 text-primary-custom">Informasi Kontak</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-3 d-flex gap-3">
-                            <i class="bi bi-geo-alt-fill text-primary-custom fs-5"></i>
+            <div class="lg:col-span-2 space-y-4">
+                <div class="rounded-2xl p-6 text-white" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light))">
+                    <h2 class="font-bold text-lg mb-6">Informasi Kontak</h2>
+                    <ul class="space-y-5">
+                        <li class="flex gap-4">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm"
+                                 style="background-color: rgba(255,255,255,0.15)">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
                             <div>
-                                <strong>Alamat</strong><br>
-                                <span class="text-muted small">{{ $profil->alamat ?? 'Jl. Poros Samarinda - Bontang, Marangkayu' }}<br>
-                                {{ $profil->kabupaten ?? 'Kutai Kartanegara' }}, {{ $profil->provinsi ?? 'Kalimantan Timur' }}</span>
+                                <p class="text-xs text-white/60 mb-1">Alamat</p>
+                                <p class="text-sm text-white/90">{{ $profil->alamat ?? 'Jl. Poros Samarinda - Bontang, Marangkayu' }}</p>
+                                <p class="text-sm text-white/70">{{ $profil->kabupaten ?? 'Kutai Kartanegara' }}, {{ $profil->provinsi ?? 'Kalimantan Timur' }}</p>
                             </div>
                         </li>
-                        <li class="mb-3 d-flex gap-3">
-                            <i class="bi bi-telephone-fill text-primary-custom fs-5"></i>
+                        <li class="flex gap-4">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm"
+                                 style="background-color: rgba(255,255,255,0.15)">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
                             <div>
-                                <strong>Telepon</strong><br>
-                                <span class="text-muted small">{{ $profil->telepon ?? '-' }}</span>
+                                <p class="text-xs text-white/60 mb-1">Telepon</p>
+                                <p class="text-sm text-white/90">{{ $profil->telepon ?? '-' }}</p>
                             </div>
                         </li>
                         @if($profil && $profil->whatsapp)
-                        <li class="mb-3 d-flex gap-3">
-                            <i class="bi bi-whatsapp text-success fs-5"></i>
+                        <li class="flex gap-4">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm bg-green-500">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
                             <div>
-                                <strong>WhatsApp</strong><br>
-                                <a href="https://wa.me/{{ preg_replace('/\D/', '', $profil->whatsapp) }}" target="_blank" class="text-muted small">{{ $profil->whatsapp }}</a>
+                                <p class="text-xs text-white/60 mb-1">WhatsApp</p>
+                                <a href="https://wa.me/{{ preg_replace('/\D/','',$profil->whatsapp) }}"
+                                   target="_blank" class="text-sm text-white/90 hover:text-yellow-400 transition-colors">
+                                    {{ $profil->whatsapp }}
+                                </a>
                             </div>
                         </li>
                         @endif
-                        <li class="mb-3 d-flex gap-3">
-                            <i class="bi bi-envelope-fill text-primary-custom fs-5"></i>
+                        <li class="flex gap-4">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm"
+                                 style="background-color: rgba(255,255,255,0.15)">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
                             <div>
-                                <strong>Email</strong><br>
-                                <span class="text-muted small">{{ $profil->email ?? 'sman1marangkayu@gmail.com' }}</span>
+                                <p class="text-xs text-white/60 mb-1">Email</p>
+                                <p class="text-sm text-white/90">{{ $profil->email ?? 'sman1marangkayu@gmail.com' }}</p>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            {{-- FORM KONTAK --}}
-            <div class="col-lg-7">
-                <div class="card border-0 shadow-sm p-4">
-                    <h5 class="fw-bold mb-4 text-primary-custom">Kirim Pesan</h5>
-                    <form method="POST" action="{{ route('kontak.kirim') }}">
+            {{-- FORM --}}
+            <div class="lg:col-span-3">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
+                    <h2 class="font-bold text-lg mb-6" style="color: var(--color-primary)">Kirim Pesan</h2>
+                    <form method="POST" action="{{ route('kontak.kirim') }}" class="space-y-4">
                         @csrf
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label small fw-500">Nama Lengkap <span class="text-danger">*</span></label>
-                                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">Nama Lengkap <span class="text-red-500">*</span></label>
+                                <input type="text" name="nama"
+                                       class="form-input @error('nama') ring-1 ring-red-400 border-red-400 @enderror"
                                        value="{{ old('nama') }}" placeholder="Nama Anda" required>
-                                @error('nama')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                @error('nama')<p class="form-error">{{ $message }}</p>@enderror
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-500">Email <span class="text-danger">*</span></label>
-                                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                            <div>
+                                <label class="form-label">Email <span class="text-red-500">*</span></label>
+                                <input type="email" name="email"
+                                       class="form-input @error('email') ring-1 ring-red-400 border-red-400 @enderror"
                                        value="{{ old('email') }}" placeholder="email@example.com" required>
-                                @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-500">No. Telepon</label>
-                                <input type="text" name="telepon" class="form-control" value="{{ old('telepon') }}" placeholder="08xx-xxxx-xxxx">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-500">Subjek <span class="text-danger">*</span></label>
-                                <input type="text" name="subjek" class="form-control @error('subjek') is-invalid @enderror"
-                                       value="{{ old('subjek') }}" placeholder="Perihal pesan" required>
-                                @error('subjek')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label small fw-500">Pesan <span class="text-danger">*</span></label>
-                                <textarea name="pesan" rows="5" class="form-control @error('pesan') is-invalid @enderror"
-                                          placeholder="Tulis pesan Anda..." required>{{ old('pesan') }}</textarea>
-                                @error('pesan')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary-custom px-4">
-                                    <i class="bi bi-send me-2"></i>Kirim Pesan
-                                </button>
+                                @error('email')<p class="form-error">{{ $message }}</p>@enderror
                             </div>
                         </div>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">No. Telepon</label>
+                                <input type="text" name="telepon" class="form-input"
+                                       value="{{ old('telepon') }}" placeholder="08xx-xxxx-xxxx">
+                            </div>
+                            <div>
+                                <label class="form-label">Subjek <span class="text-red-500">*</span></label>
+                                <input type="text" name="subjek"
+                                       class="form-input @error('subjek') ring-1 ring-red-400 border-red-400 @enderror"
+                                       value="{{ old('subjek') }}" placeholder="Perihal pesan" required>
+                                @error('subjek')<p class="form-error">{{ $message }}</p>@enderror
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Pesan <span class="text-red-500">*</span></label>
+                            <textarea name="pesan" rows="5"
+                                      class="form-input @error('pesan') ring-1 ring-red-400 border-red-400 @enderror"
+                                      placeholder="Tulis pesan Anda..." required>{{ old('pesan') }}</textarea>
+                            @error('pesan')<p class="form-error">{{ $message }}</p>@enderror
+                        </div>
+                        <button type="submit" class="btn-primary w-full justify-center py-3">
+                            <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
+                        </button>
                     </form>
                 </div>
             </div>
 
-            {{-- PETA --}}
+            {{-- MAPS --}}
             @if($profil && $profil->maps_embed)
-            <div class="col-12">
-                <h5 class="fw-bold mb-3 text-primary-custom">Lokasi Sekolah</h5>
-                <div class="rounded-3 overflow-hidden shadow-sm">
+            <div class="lg:col-span-5">
+                <h2 class="font-bold text-lg mb-4" style="color: var(--color-primary)">Lokasi Sekolah</h2>
+                <div class="rounded-2xl overflow-hidden shadow-sm">
                     {!! $profil->maps_embed !!}
                 </div>
             </div>

@@ -2,63 +2,73 @@
 @section('title', 'Edit Berita')
 
 @section('content')
-<div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
+<div class="max-w-4xl">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
         <form method="POST" action="{{ route('admin.berita.update', $berita) }}" enctype="multipart/form-data">
             @csrf @method('PUT')
-            <div class="row g-3">
-                <div class="col-12">
-                    <label class="form-label fw-500">Judul <span class="text-danger">*</span></label>
-                    <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul', $berita->judul) }}" required>
-                    @error('judul')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            <div class="grid gap-5">
+                <div>
+                    <label class="form-label">Judul <span class="text-red-500">*</span></label>
+                    <input type="text" name="judul" class="form-input" value="{{ old('judul', $berita->judul) }}" required>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-500">Tipe</label>
-                    <select name="tipe" class="form-select">
-                        @foreach(['berita','pengumuman','agenda'] as $t)
-                        <option value="{{ $t }}" {{ old('tipe', $berita->tipe) === $t ? 'selected' : '' }}>{{ ucfirst($t) }}</option>
-                        @endforeach
-                    </select>
+
+                <div class="grid sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="form-label">Tipe</label>
+                        <select name="tipe" class="form-input">
+                            @foreach(['berita'=>'Berita','pengumuman'=>'Pengumuman','agenda'=>'Agenda'] as $v=>$l)
+                            <option value="{{ $v }}" {{ old('tipe', $berita->tipe) === $v ? 'selected':'' }}>{{ $l }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Kategori</label>
+                        <select name="kategori_id" class="form-input">
+                            <option value="">-- Pilih --</option>
+                            @foreach($kategori as $k)
+                            <option value="{{ $k->id }}" {{ old('kategori_id', $berita->kategori_id) == $k->id ? 'selected':'' }}>{{ $k->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-input">
+                            <option value="draft" {{ old('status', $berita->status) === 'draft' ? 'selected':'' }}>Draft</option>
+                            <option value="published" {{ old('status', $berita->status) === 'published' ? 'selected':'' }}>Published</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-500">Kategori</label>
-                    <select name="kategori_id" class="form-select">
-                        <option value="">-- Pilih Kategori --</option>
-                        @foreach($kategori as $k)
-                        <option value="{{ $k->id }}" {{ old('kategori_id', $berita->kategori_id) == $k->id ? 'selected' : '' }}>{{ $k->nama }}</option>
-                        @endforeach
-                    </select>
+
+                <div>
+                    <label class="form-label">Ringkasan</label>
+                    <textarea name="ringkasan" class="form-input" rows="2">{{ old('ringkasan', $berita->ringkasan) }}</textarea>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-500">Status</label>
-                    <select name="status" class="form-select">
-                        <option value="draft" {{ old('status', $berita->status) === 'draft' ? 'selected' : '' }}>Draft</option>
-                        <option value="published" {{ old('status', $berita->status) === 'published' ? 'selected' : '' }}>Published</option>
-                    </select>
+
+                <div>
+                    <label class="form-label">Konten <span class="text-red-500">*</span></label>
+                    <textarea name="konten" class="form-input" rows="14">{{ old('konten', $berita->konten) }}</textarea>
                 </div>
-                <div class="col-12">
-                    <label class="form-label fw-500">Ringkasan</label>
-                    <textarea name="ringkasan" class="form-control" rows="2">{{ old('ringkasan', $berita->ringkasan) }}</textarea>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Thumbnail</label>
+                        @if($berita->thumbnail)
+                        <img src="{{ Storage::url($berita->thumbnail) }}" class="h-20 rounded-lg object-cover mb-2" alt="">
+                        @endif
+                        <input type="file" name="thumbnail" class="form-input" accept="image/*">
+                    </div>
+                    <div>
+                        <label class="form-label">Tanggal Publish</label>
+                        <input type="datetime-local" name="tanggal_publish" class="form-input"
+                               value="{{ old('tanggal_publish', $berita->tanggal_publish?->format('Y-m-d\TH:i')) }}">
+                    </div>
                 </div>
-                <div class="col-12">
-                    <label class="form-label fw-500">Konten <span class="text-danger">*</span></label>
-                    <textarea name="konten" class="form-control" rows="12">{{ old('konten', $berita->konten) }}</textarea>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label fw-500">Thumbnail</label>
-                    @if($berita->thumbnail)
-                    <div class="mb-2"><img src="{{ Storage::url($berita->thumbnail) }}" height="80" class="rounded" alt="thumb"></div>
-                    @endif
-                    <input type="file" name="thumbnail" class="form-control" accept="image/*">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label fw-500">Tanggal Publish</label>
-                    <input type="datetime-local" name="tanggal_publish" class="form-control"
-                           value="{{ old('tanggal_publish', $berita->tanggal_publish ? $berita->tanggal_publish->format('Y-m-d\TH:i') : '') }}">
-                </div>
-                <div class="col-12 d-flex gap-2">
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-save me-2"></i>Perbarui</button>
-                    <a href="{{ route('admin.berita.index') }}" class="btn btn-outline-secondary">Batal</a>
+
+                <div class="flex gap-3 pt-2">
+                    <button type="submit" class="btn-primary">
+                        <i class="fa-solid fa-floppy-disk"></i> Perbarui
+                    </button>
+                    <a href="{{ route('admin.berita.index') }}" class="btn-outline">Batal</a>
                 </div>
             </div>
         </form>

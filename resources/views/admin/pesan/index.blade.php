@@ -2,40 +2,56 @@
 @section('title', 'Pesan Masuk')
 
 @section('content')
-<div class="card border-0 shadow-sm">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-                <tr><th>Pengirim</th><th>Subjek</th><th>Telepon</th><th>Status</th><th>Waktu</th><th>Aksi</th></tr>
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                    <th class="text-left px-5 py-3">Pengirim</th>
+                    <th class="text-left px-4 py-3">Subjek</th>
+                    <th class="text-left px-4 py-3">Telepon</th>
+                    <th class="text-left px-4 py-3">Status</th>
+                    <th class="text-left px-4 py-3">Waktu</th>
+                    <th class="text-right px-5 py-3">Aksi</th>
+                </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-slate-100">
                 @forelse($pesan as $p)
-                <tr class="{{ !$p->is_read ? 'fw-600' : '' }}">
-                    <td>{{ $p->nama }}<br><small class="text-muted fw-normal">{{ $p->email }}</small></td>
-                    <td>{{ Str::limit($p->subjek, 50) }}</td>
-                    <td class="small">{{ $p->telepon ?? '-' }}</td>
-                    <td>
+                <tr class="hover:bg-slate-50 transition-colors {{ !$p->is_read ? 'bg-blue-50/40' : '' }}">
+                    <td class="px-5 py-3">
+                        <p class="font-medium text-gray-800 {{ !$p->is_read ? 'font-semibold' : '' }}">{{ $p->nama }}</p>
+                        <p class="text-xs text-gray-400">{{ $p->email }}</p>
+                    </td>
+                    <td class="px-4 py-3 text-gray-700">{{ Str::limit($p->subjek, 45) }}</td>
+                    <td class="px-4 py-3 text-gray-500">{{ $p->telepon ?? '-' }}</td>
+                    <td class="px-4 py-3">
                         @if(!$p->is_read)
-                        <span class="badge bg-danger">Baru</span>
+                        <span class="badge bg-red-100 text-red-600">Baru</span>
                         @else
-                        <span class="badge bg-secondary">Dibaca</span>
+                        <span class="badge badge-gray">Dibaca</span>
                         @endif
                     </td>
-                    <td class="small text-muted">{{ $p->created_at->diffForHumans() }}</td>
-                    <td>
-                        <a href="{{ route('admin.pesan.show', $p) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
-                        <form method="POST" action="{{ route('admin.pesan.destroy', $p) }}" class="d-inline" onsubmit="return confirm('Hapus pesan ini?')">
+                    <td class="px-4 py-3 text-gray-400 text-xs">{{ $p->created_at->diffForHumans() }}</td>
+                    <td class="px-5 py-3 text-right">
+                        <a href="{{ route('admin.pesan.show', $p) }}"
+                           class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-200 text-gray-600 hover:border-blue-300 hover:text-blue-700 transition-colors mr-1">
+                            <i class="fa-solid fa-eye"></i> Baca
+                        </a>
+                        <form method="POST" action="{{ route('admin.pesan.destroy', $p) }}" class="inline"
+                              onsubmit="return confirm('Hapus pesan ini?')">
                             @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            <button class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-200 text-gray-600 hover:border-red-300 hover:text-red-600 transition-colors">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="6" class="text-center text-muted py-4">Tidak ada pesan.</td></tr>
+                <tr><td colspan="6" class="text-center text-gray-400 py-12">Tidak ada pesan masuk.</td></tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-    <div class="p-3">{{ $pesan->links() }}</div>
+    <div class="px-5 py-4 border-t border-slate-100">{{ $pesan->links() }}</div>
 </div>
 @endsection
