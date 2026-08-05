@@ -12,114 +12,184 @@
 </head>
 <body class="font-sans antialiased">
 
-{{-- TOP BAR --}}
-<div class="hidden md:block text-xs py-2" style="background-color: var(--color-primary-dark); color: rgba(255,255,255,0.7)">
-    <div class="container mx-auto max-w-7xl px-4 flex justify-between items-center">
-        <span><i class="fa-solid fa-location-dot mr-1"></i> Marangkayu, Kutai Kartanegara, Kalimantan Timur</span>
-        <div class="flex gap-4">
-            <a href="#" class="hover:text-yellow-400 transition-colors"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#" class="hover:text-yellow-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="hover:text-yellow-400 transition-colors"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-    </div>
-</div>
-
 {{-- NAVBAR --}}
-<nav class="sticky top-0 z-50 shadow-md" style="background-color: var(--color-primary)" x-data="{ open: false }">
-    <div class="container mx-auto max-w-7xl px-4">
-        <div class="flex items-center justify-between h-16">
+<nav class="shadow-sm border-b border-gray-100 sticky top-0 z-50 bg-white">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-4">
+        <div class="flex items-center justify-between h-20">
 
             {{-- BRAND --}}
-            <a href="{{ route('home') }}" class="flex items-center gap-3 text-white">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-10 w-10 object-contain"
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
+                <img src="{{ asset('images/logo.jpg') }}" alt="Logo SMA Negeri 1 Marangkayu"
+                     class="w-12 h-auto object-contain flex-shrink-0" style="max-height:56px"
                      onerror="this.style.display='none'">
                 <div class="leading-tight">
-                    <div class="text-xs opacity-80">SMA Negeri</div>
-                    <div class="font-bold text-base">1 Marangkayu</div>
+                    <div class="text-lg sm:text-xl font-bold text-gray-800 leading-tight">SMA Negeri 1</div>
+                    <div class="text-sm text-gray-500 leading-snug">Marangkayu</div>
                 </div>
             </a>
 
             {{-- DESKTOP NAV --}}
-            <div class="hidden lg:flex items-center gap-1">
+            <div class="hidden lg:flex items-center gap-1 text-lg lg:text-xl font-semibold">
+
                 <a href="{{ route('home') }}"
-                   class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('home') ? 'text-yellow-400' : 'text-white/85 hover:text-yellow-400' }}">
+                   class="px-3 py-2 rounded-md transition-colors {{ request()->routeIs('home') ? '' : 'text-gray-600 hover:text-gray-900' }}"
+                   style="{{ request()->routeIs('home') ? 'color:var(--color-primary)' : '' }}">
                     Beranda
                 </a>
 
                 {{-- Profil Dropdown --}}
-                <div class="relative" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                    <button class="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('profil.*') ? 'text-yellow-400' : 'text-white/85 hover:text-yellow-400' }}">
-                        Profil <i class="fa-solid fa-chevron-down text-xs mt-0.5"></i>
+                <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <button @click="open = !open"
+                            class="flex items-center gap-1 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('profil.*') ? '' : 'text-gray-600 hover:text-gray-900' }}"
+                            style="{{ request()->routeIs('profil.*') ? 'color:var(--color-primary)' : '' }}">
+                        Profil
+                        <svg class="w-3 h-3 transition-transform" :class="open && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </button>
-                    <div x-show="open" x-transition
-                         class="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-xl py-2 z-50">
-                        <a href="{{ route('profil.sejarah') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Sejarah Sekolah</a>
-                        <a href="{{ route('profil.visi-misi') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Visi &amp; Misi</a>
-                        <a href="{{ route('profil.struktur-organisasi') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Guru &amp; Staf</a>
-                        <a href="{{ route('profil.fasilitas') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Fasilitas</a>
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl border border-gray-100 shadow-lg py-1 z-50"
+                         @click="open = false" style="display:none">
+                        <a href="{{ route('profil.sejarah') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Sejarah Sekolah</a>
+                        <a href="{{ route('profil.visi-misi') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Visi &amp; Misi</a>
+                        <a href="{{ route('profil.struktur-organisasi') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Guru &amp; Staf</a>
+                        <a href="{{ route('profil.fasilitas') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Fasilitas</a>
                     </div>
                 </div>
 
                 {{-- Akademik Dropdown --}}
-                <div class="relative" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                    <button class="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('akademik.*') ? 'text-yellow-400' : 'text-white/85 hover:text-yellow-400' }}">
-                        Akademik <i class="fa-solid fa-chevron-down text-xs mt-0.5"></i>
+                <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <button @click="open = !open"
+                            class="flex items-center gap-1 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('akademik.*') ? '' : 'text-gray-600 hover:text-gray-900' }}"
+                            style="{{ request()->routeIs('akademik.*') ? 'color:var(--color-primary)' : '' }}">
+                        Akademik
+                        <svg class="w-3 h-3 transition-transform" :class="open && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </button>
-                    <div x-show="open" x-transition
-                         class="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-xl py-2 z-50">
-                        <a href="{{ route('akademik.kurikulum') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Kurikulum</a>
-                        <a href="{{ route('akademik.program-studi') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Program Studi</a>
-                        <a href="{{ route('akademik.ekstrakurikuler') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Ekstrakurikuler</a>
-                        <a href="{{ route('akademik.kalender') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Kalender Akademik</a>
-                        <a href="{{ route('akademik.prestasi') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800">Prestasi</a>
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl border border-gray-100 shadow-lg py-1 z-50"
+                         @click="open = false" style="display:none">
+                        <a href="{{ route('akademik.kurikulum') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kurikulum</a>
+                        <a href="{{ route('akademik.program-studi') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Program Studi</a>
+                        <a href="{{ route('akademik.ekstrakurikuler') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Ekstrakurikuler</a>
+                        <a href="{{ route('akademik.kalender') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kalender Akademik</a>
+                        <a href="{{ route('akademik.prestasi') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Prestasi</a>
                     </div>
                 </div>
 
                 <a href="{{ route('berita.index') }}"
-                   class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('berita.*') ? 'text-yellow-400' : 'text-white/85 hover:text-yellow-400' }}">
+                   class="px-3 py-2 rounded-md transition-colors {{ request()->routeIs('berita.*') ? '' : 'text-gray-600 hover:text-gray-900' }}"
+                   style="{{ request()->routeIs('berita.*') ? 'color:var(--color-primary)' : '' }}">
                     Berita
                 </a>
                 <a href="{{ route('galeri.index') }}"
-                   class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('galeri.*') ? 'text-yellow-400' : 'text-white/85 hover:text-yellow-400' }}">
+                   class="px-3 py-2 rounded-md transition-colors {{ request()->routeIs('galeri.*') ? '' : 'text-gray-600 hover:text-gray-900' }}"
+                   style="{{ request()->routeIs('galeri.*') ? 'color:var(--color-primary)' : '' }}">
                     Galeri
                 </a>
                 <a href="{{ route('kontak') }}"
-                   class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('kontak') ? 'text-yellow-400' : 'text-white/85 hover:text-yellow-400' }}">
+                   class="px-3 py-2 rounded-md transition-colors {{ request()->routeIs('kontak') ? '' : 'text-gray-600 hover:text-gray-900' }}"
+                   style="{{ request()->routeIs('kontak') ? 'color:var(--color-primary)' : '' }}">
                     Kontak
                 </a>
-                @auth
-                <a href="{{ route('admin.dashboard') }}"
-                   class="ml-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors"
-                   style="background-color: var(--color-accent)">
-                    <i class="fa-solid fa-gauge-high mr-1"></i> Admin
-                </a>
-                @endauth
             </div>
 
             {{-- MOBILE TOGGLE --}}
-            <button @click="open=!open" class="lg:hidden text-white p-2">
-                <i class="fa-solid fa-bars text-xl" x-show="!open"></i>
-                <i class="fa-solid fa-xmark text-xl" x-show="open" style="display:none"></i>
+            <button x-data="" @click="$dispatch('toggle-mobile-menu')"
+                    class="lg:hidden flex items-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors border border-gray-200">
+                <i class="fa-solid fa-bars text-lg"></i>
             </button>
         </div>
     </div>
 
     {{-- MOBILE MENU --}}
-    <div x-show="open" x-transition class="lg:hidden border-t border-white/10 pb-4">
-        <div class="container mx-auto max-w-7xl px-4 pt-3 flex flex-col gap-1">
-            <a href="{{ route('home') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10">Beranda</a>
-            <div class="px-3 py-1 text-xs text-white/40 uppercase tracking-widest mt-1">Profil</div>
-            <a href="{{ route('profil.sejarah') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10 pl-5">Sejarah Sekolah</a>
-            <a href="{{ route('profil.visi-misi') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10 pl-5">Visi &amp; Misi</a>
-            <a href="{{ route('profil.struktur-organisasi') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10 pl-5">Guru &amp; Staf</a>
-            <a href="{{ route('profil.fasilitas') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10 pl-5">Fasilitas</a>
-            <div class="px-3 py-1 text-xs text-white/40 uppercase tracking-widest mt-1">Akademik</div>
-            <a href="{{ route('akademik.kurikulum') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10 pl-5">Kurikulum</a>
-            <a href="{{ route('akademik.ekstrakurikuler') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10 pl-5">Ekstrakurikuler</a>
-            <a href="{{ route('akademik.prestasi') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10 pl-5">Prestasi</a>
-            <a href="{{ route('berita.index') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10">Berita</a>
-            <a href="{{ route('galeri.index') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10">Galeri</a>
-            <a href="{{ route('kontak') }}" class="block px-3 py-2 text-white/85 text-sm rounded-lg hover:bg-white/10">Kontak</a>
+    <div x-data="{
+            open: false,
+            profil: false,
+            akademik: false
+         }"
+         @toggle-mobile-menu.window="open = !open"
+         class="lg:hidden border-t border-gray-100">
+        <div x-show="open"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-2"
+             class="bg-white shadow-lg divide-y divide-gray-50 max-h-[80vh] overflow-y-auto"
+             style="display:none">
+
+            {{-- Beranda --}}
+            <a href="{{ route('home') }}"
+               class="flex items-center px-5 py-3.5 text-sm font-semibold {{ request()->routeIs('home') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50' }}"
+               style="{{ request()->routeIs('home') ? 'color:var(--color-primary)' : '' }}">
+                Beranda
+            </a>
+
+            {{-- Profil Accordion --}}
+            <div>
+                <button @click="profil = !profil"
+                        class="w-full flex items-center justify-between px-5 py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+                    <span>Profil</span>
+                    <svg class="w-4 h-4 transition-transform" :class="profil && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div x-show="profil" class="bg-gray-50" style="display:none">
+                    <a href="{{ route('profil.sejarah') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Sejarah Sekolah</a>
+                    <a href="{{ route('profil.visi-misi') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Visi &amp; Misi</a>
+                    <a href="{{ route('profil.struktur-organisasi') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Guru &amp; Staf</a>
+                    <a href="{{ route('profil.fasilitas') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Fasilitas</a>
+                </div>
+            </div>
+
+            {{-- Akademik Accordion --}}
+            <div>
+                <button @click="akademik = !akademik"
+                        class="w-full flex items-center justify-between px-5 py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+                    <span>Akademik</span>
+                    <svg class="w-4 h-4 transition-transform" :class="akademik && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div x-show="akademik" class="bg-gray-50" style="display:none">
+                    <a href="{{ route('akademik.kurikulum') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kurikulum</a>
+                    <a href="{{ route('akademik.program-studi') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Program Studi</a>
+                    <a href="{{ route('akademik.ekstrakurikuler') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Ekstrakurikuler</a>
+                    <a href="{{ route('akademik.kalender') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kalender Akademik</a>
+                    <a href="{{ route('akademik.prestasi') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Prestasi</a>
+                </div>
+            </div>
+
+            <a href="{{ route('berita.index') }}"
+               class="flex items-center px-5 py-3.5 text-sm font-semibold {{ request()->routeIs('berita.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50' }}"
+               style="{{ request()->routeIs('berita.*') ? 'color:var(--color-primary)' : '' }}">
+                Berita
+            </a>
+            <a href="{{ route('galeri.index') }}"
+               class="flex items-center px-5 py-3.5 text-sm font-semibold {{ request()->routeIs('galeri.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50' }}"
+               style="{{ request()->routeIs('galeri.*') ? 'color:var(--color-primary)' : '' }}">
+                Galeri
+            </a>
+            <a href="{{ route('kontak') }}"
+               class="flex items-center px-5 py-3.5 text-sm font-semibold {{ request()->routeIs('kontak') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50' }}"
+               style="{{ request()->routeIs('kontak') ? 'color:var(--color-primary)' : '' }}">
+                Kontak
+            </a>
         </div>
     </div>
 </nav>
@@ -130,64 +200,109 @@
 </main>
 
 {{-- FOOTER --}}
-<footer class="pt-14 pb-4 mt-16" style="background-color: var(--color-primary)">
-    <div class="container mx-auto max-w-7xl px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-            <div>
-                <h6 class="text-sm font-bold uppercase tracking-widest mb-4" style="color: var(--color-accent)">
-                    SMA Negeri 1 Marangkayu
-                </h6>
-                <p class="text-white/65 text-sm leading-relaxed mb-4">
-                    Jl. Poros Samarinda - Bontang, Marangkayu<br>
-                    Kutai Kartanegara, Kalimantan Timur
-                </p>
-                <p class="text-white/65 text-sm mb-1"><i class="fa-solid fa-phone mr-2 text-yellow-400"></i>(0541) 000000</p>
-                <p class="text-white/65 text-sm"><i class="fa-solid fa-envelope mr-2 text-yellow-400"></i>sman1marangkayu@gmail.com</p>
-                <div class="flex gap-3 mt-4">
-                    <a href="#" class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white/70 hover:bg-yellow-400 hover:text-white transition-colors text-sm">
+<footer class="relative text-gray-300 overflow-hidden mt-16" style="background-color: var(--color-primary-dark)">
+    {{-- Background pattern overlay --}}
+    <div class="absolute inset-0 opacity-80"
+         style="background-image: url('{{ asset('images/wheat.webp') }}'); background-repeat: repeat; background-position: top left; background-size: 210px;"></div>
+    <div class="absolute inset-0 bg-black/30"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 items-start">
+
+            {{-- Brand col --}}
+            <div class="lg:col-span-2 flex flex-col items-start">
+                <div class="flex items-center gap-3 mb-8">
+                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo SMA Negeri 1 Marangkayu"
+                         class="w-12 h-12 object-contain" onerror="this.style.display='none'">
+                    <div>
+                        <div class="font-bold text-lg text-white">SMA Negeri 1 Marangkayu</div>
+                        <div class="text-sm text-white/50">Kutai Kartanegara, Kalimantan Timur</div>
+                    </div>
+                </div>
+                {{-- Social icons --}}
+                <div class="flex gap-3">
+                    <a href="#" target="_blank" rel="noopener noreferrer" title="Facebook"
+                       class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm"
+                       style="background:#1877F2">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white/70 hover:bg-yellow-400 hover:text-white transition-colors text-sm">
+                    <a href="#" target="_blank" rel="noopener noreferrer" title="Instagram"
+                       class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm"
+                       style="background:linear-gradient(45deg,#833AB4,#C13584,#E1306C,#FD1D1D,#FCAF45)">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                    <a href="#" class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white/70 hover:bg-yellow-400 hover:text-white transition-colors text-sm">
+                    <a href="#" target="_blank" rel="noopener noreferrer" title="YouTube"
+                       class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm"
+                       style="background:#FF0000">
                         <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" title="TikTok"
+                       class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm"
+                       style="background:#010101">
+                        <i class="fa-brands fa-tiktok"></i>
                     </a>
                 </div>
             </div>
-            <div>
-                <h6 class="text-sm font-bold uppercase tracking-widest mb-4" style="color: var(--color-accent)">Profil</h6>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('profil.sejarah') }}" class="text-white/65 hover:text-yellow-400">Sejarah</a></li>
-                    <li><a href="{{ route('profil.visi-misi') }}" class="text-white/65 hover:text-yellow-400">Visi &amp; Misi</a></li>
-                    <li><a href="{{ route('profil.struktur-organisasi') }}" class="text-white/65 hover:text-yellow-400">Guru &amp; Staf</a></li>
-                    <li><a href="{{ route('profil.fasilitas') }}" class="text-white/65 hover:text-yellow-400">Fasilitas</a></li>
+
+            {{-- Profil --}}
+            <div class="flex flex-col items-start">
+                <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-3">Profil</h4>
+                <ul class="space-y-2 text-sm text-white/60">
+                    <li><a href="{{ route('profil.sejarah') }}" class="hover:text-white transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Sejarah Sekolah</a></li>
+                    <li><a href="{{ route('profil.visi-misi') }}" class="hover:text-white transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Visi &amp; Misi</a></li>
+                    <li><a href="{{ route('profil.struktur-organisasi') }}" class="hover:text-white transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Guru &amp; Staf</a></li>
+                    <li><a href="{{ route('profil.fasilitas') }}" class="hover:text-white transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Fasilitas</a></li>
                 </ul>
             </div>
-            <div>
-                <h6 class="text-sm font-bold uppercase tracking-widest mb-4" style="color: var(--color-accent)">Akademik</h6>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('akademik.kurikulum') }}" class="text-white/65 hover:text-yellow-400">Kurikulum</a></li>
-                    <li><a href="{{ route('akademik.ekstrakurikuler') }}" class="text-white/65 hover:text-yellow-400">Ekstrakurikuler</a></li>
-                    <li><a href="{{ route('akademik.prestasi') }}" class="text-white/65 hover:text-yellow-400">Prestasi</a></li>
-                    <li><a href="{{ route('akademik.kalender') }}" class="text-white/65 hover:text-yellow-400">Kalender</a></li>
+
+            {{-- Akademik --}}
+            <div class="flex flex-col items-start">
+                <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-3">Akademik</h4>
+                <ul class="space-y-2 text-sm text-white/60">
+                    <li><a href="{{ route('akademik.kurikulum') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Kurikulum</a></li>
+                    <li><a href="{{ route('akademik.program-studi') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Program Studi</a></li>
+                    <li><a href="{{ route('akademik.ekstrakurikuler') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Ekstrakurikuler</a></li>
+                    <li><a href="{{ route('akademik.kalender') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Kalender Akademik</a></li>
+                    <li><a href="{{ route('akademik.prestasi') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Prestasi</a></li>
                 </ul>
             </div>
-            <div>
-                <h6 class="text-sm font-bold uppercase tracking-widest mb-4" style="color: var(--color-accent)">Informasi</h6>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('berita.index') }}" class="text-white/65 hover:text-yellow-400">Berita</a></li>
-                    <li><a href="{{ route('galeri.index') }}" class="text-white/65 hover:text-yellow-400">Galeri</a></li>
-                    <li><a href="{{ route('kontak') }}" class="text-white/65 hover:text-yellow-400">Kontak</a></li>
-                    <li><a href="https://kemdikbud.go.id" target="_blank" class="text-white/65 hover:text-yellow-400">Kemdikbud</a></li>
+
+            {{-- Informasi --}}
+            <div class="flex flex-col items-start">
+                <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-3">Informasi</h4>
+                <ul class="space-y-2 text-sm text-white/60">
+                    <li><a href="{{ route('berita.index') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Berita &amp; Kegiatan</a></li>
+                    <li><a href="{{ route('galeri.index') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Galeri Foto</a></li>
+                    <li><a href="{{ route('kontak') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Kontak Kami</a></li>
+                    <li><a href="https://kemdikbud.go.id" target="_blank" rel="noopener noreferrer" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Kemdikbud</a></li>
                 </ul>
             </div>
+
+            {{-- CTA / PPDB --}}
+            <div class="flex flex-col items-start">
+                <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-3">Penerimaan Siswa</h4>
+                <p class="text-sm text-white/60 mb-4 leading-relaxed">
+                    Informasi pendaftaran siswa baru dan jadwal PPDB terkini.
+                </p>
+                <a href="{{ route('kontak') }}"
+                   class="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-lg transition-all"
+                   style="background:#fff ;color:var(--color-primary-dark)">
+                    <i class="fa-solid fa-user-plus mr-2"></i>Info PPDB
+                </a>
+            </div>
+
         </div>
-        <div class="border-t border-white/10 pt-4 text-center text-white/40 text-xs">
-            &copy; {{ date('Y') }} SMA Negeri 1 Marangkayu. Hak Cipta Dilindungi.
-        </div>
+
     </div>
 </footer>
+
+{{-- Bottom bar --}}
+<div class="text-sm" style="background:#111827">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center justify-between gap-2">
+        <p class="text-gray-400">&copy; {{ date('Y') }} SMA Negeri 1 Marangkayu. Hak cipta dilindungi undang-undang.</p>
+        <p class="text-gray-400">Dibuat oleh <span class="text-white">arfkimaulana X icong</span></p>
+    </div>
+</div>
 
 @stack('scripts')
 </body>

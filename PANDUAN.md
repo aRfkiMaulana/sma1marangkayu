@@ -29,7 +29,7 @@ DB_PASSWORD=
 ## Akun Admin Default
 | Email | Password |
 |-------|----------|
-| admin@sman1marangkayu.sch.id | Admin@12345 |
+| admin@sman1marangkayu.sch.id | Ad min@12345|
 
 ---
 
