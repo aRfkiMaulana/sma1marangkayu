@@ -34,8 +34,10 @@ Route::prefix('profil')->name('profil.')->group(function () {
 Route::prefix('akademik')->name('akademik.')->group(function () {
     Route::get('/kurikulum', [AkademikController::class, 'kurikulum'])->name('kurikulum');
     Route::get('/ekstrakurikuler', [AkademikController::class, 'ekstrakurikuler'])->name('ekstrakurikuler');
+    Route::get('/ekstrakurikuler/{ekstrakurikuler}', [AkademikController::class, 'ekstrakurikulerShow'])->name('ekstrakurikuler.show');
     Route::get('/kalender', [AkademikController::class, 'kalender'])->name('kalender');
     Route::get('/prestasi', [AkademikController::class, 'prestasi'])->name('prestasi');
+    Route::get('/prestasi/{prestasi}', [AkademikController::class, 'prestasiShow'])->name('prestasi.show');
 });
 
 // Berita

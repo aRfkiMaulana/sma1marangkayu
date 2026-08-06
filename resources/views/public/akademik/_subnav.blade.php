@@ -29,7 +29,7 @@
             @endphp
 
             @foreach($navItems as $item)
-                @php $isActive = request()->routeIs($item['route']); @endphp
+                @php $isActive = request()->routeIs($item['route'].'*'); @endphp
                 <a href="{{ route($item['route']) }}"
                    class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap"
                    style="{{ $isActive ? 'background:var(--color-primary);color:#fff' : 'color:#475569' }}"

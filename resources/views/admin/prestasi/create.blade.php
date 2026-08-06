@@ -26,6 +26,20 @@
                     @enderror
                 </div>
 
+                {{-- Ekskul (opsional) --}}
+                <div>
+                    <label class="form-label">Ekstrakurikuler <span class="text-gray-400 font-normal text-xs">(opsional)</span></label>
+                    <select name="ekstrakurikuler_id" class="form-input">
+                        <option value="">— Individu / Bukan Ekskul —</option>
+                        @foreach($ekskul as $e)
+                        <option value="{{ $e->id }}" {{ old('ekstrakurikuler_id') == $e->id ? 'selected' : '' }}>
+                            {{ $e->nama }}
+                        </option>
+                        @endforeach
+                    </select>
+                    <p class="text-xs text-gray-400 mt-1">Pilih jika prestasi ini diraih oleh unit ekstrakurikuler.</p>
+                </div>
+
                 <div class="grid sm:grid-cols-2 gap-4">
                     <div>
                         <label class="form-label">Tingkat <span class="text-red-500">*</span></label>

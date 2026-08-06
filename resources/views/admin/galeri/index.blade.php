@@ -13,8 +13,7 @@
         <table class="w-full text-sm">
             <thead>
                 <tr class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    <th class="text-left px-5 py-3">Item</th>
-                    <th class="text-left px-4 py-3">Tipe</th>
+                    <th class="text-left px-5 py-3">Foto</th>
                     <th class="text-left px-4 py-3">Album</th>
                     <th class="text-left px-4 py-3">Highlight</th>
                     <th class="text-right px-5 py-3">Aksi</th>
@@ -25,15 +24,10 @@
                 <tr class="hover:bg-slate-50 transition-colors">
                     <td class="px-5 py-3">
                         <div class="flex items-center gap-3">
-                            <img src="{{ $g->tipe === 'foto' ? Storage::url($g->file) : 'https://placehold.co/50x40/1a3d6e/fff?text=Vid' }}"
+                            <img src="{{ Storage::url($g->file) }}"
                                  class="w-12 h-10 rounded-lg object-cover flex-shrink-0" alt="">
                             <span class="font-medium text-gray-700">{{ Str::limit($g->judul, 45) }}</span>
                         </div>
-                    </td>
-                    <td class="px-4 py-3">
-                        <span class="badge {{ $g->tipe === 'foto' ? 'badge-primary' : 'bg-red-100 text-red-700' }}">
-                            {{ ucfirst($g->tipe) }}
-                        </span>
                     </td>
                     <td class="px-4 py-3 text-gray-500">{{ $g->album ?? '-' }}</td>
                     <td class="px-4 py-3">
@@ -58,7 +52,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" class="text-center text-gray-400 py-12">Galeri kosong.</td></tr>
+                <tr><td colspan="4" class="text-center text-gray-400 py-12">Galeri kosong.</td></tr>
                 @endforelse
             </tbody>
         </table>

@@ -195,7 +195,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 @foreach($galeri as $g)
                 <div class="overflow-hidden rounded-xl group cursor-pointer aspect-square">
-                    <img src="{{ $g->tipe === 'foto' ? Storage::url($g->file) : 'https://placehold.co/400x400/1a3d6e/fff?text=Video' }}"
+                    <img src="{{ Storage::url($g->file) }}"
                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                          alt="{{ $g->judul }}">
                 </div>

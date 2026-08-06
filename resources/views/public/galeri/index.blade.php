@@ -2,11 +2,11 @@
 @section('title', 'Galeri - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<section class="py-14">
+<section class="py-10">
     <div class="container mx-auto max-w-7xl px-4">
-        <div class="text-center mb-10">
-            <h1 class="section-title mx-auto after:mx-auto">Galeri Foto &amp; Video</h1>
-            <p class="text-gray-500 mt-3">Dokumentasi kegiatan SMA Negeri 1 Marangkayu</p>
+        <div class="text-center mb-7">
+            <h1 class="section-title mx-auto after:mx-auto">Galeri Foto</h1>
+            <p class="text-gray-500 ">Dokumentasi kegiatan SMA Negeri 1 Marangkayu</p>
         </div>
 
         {{-- FILTER ALBUM --}}
@@ -29,20 +29,15 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             @forelse($galeri as $g)
             <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer"
-                 @if($g->tipe === 'video') onclick="window.open('{{ $g->file }}','_blank')" @endif>
-                <img src="{{ $g->tipe === 'foto' ? Storage::url($g->file) : 'https://placehold.co/400x400/1a3d6e/fff?text=Video' }}"
+                 data-lightbox-src="{{ Storage::url($g->file) }}"
+                 data-lightbox-caption="{{ $g->judul }}"
+                 data-lightbox-group="galeri-index">
+                <img src="{{ Storage::url($g->file) }}"
                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                      alt="{{ $g->judul }}">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
                     <p class="text-white text-xs font-medium line-clamp-2">{{ $g->judul }}</p>
                 </div>
-                @if($g->tipe === 'video')
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-12 h-12 rounded-full bg-white/80 flex items-center justify-center">
-                        <i class="fa-solid fa-play text-blue-800 ml-1"></i>
-                    </div>
-                </div>
-                @endif
             </div>
             @empty
             <div class="col-span-4 rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 md:p-12 text-center">
@@ -51,7 +46,7 @@
                     <i class="fa-solid fa-images"></i>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-700">Galeri masih kosong</h3>
-                <p class="mt-2 text-sm text-gray-500">Foto dan video dokumentasi kegiatan sekolah akan tampil di sini.</p>
+                <p class="mt-2 text-sm text-gray-500">Foto dokumentasi kegiatan sekolah akan tampil di sini.</p>
             </div>
             @endforelse
         </div>
@@ -59,4 +54,5 @@
         <div class="mt-8">{{ $galeri->links() }}</div>
     </div>
 </section>
+
 @endsection

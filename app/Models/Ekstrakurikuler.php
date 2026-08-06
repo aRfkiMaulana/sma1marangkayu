@@ -20,4 +20,9 @@ class Ekstrakurikuler extends Model
     {
         return $this->hasMany(EkskulPersonel::class)->orderBy('urutan');
     }
+
+    public function prestasi()
+    {
+        return $this->hasMany(\App\Models\Prestasi::class)->orderByDesc('tahun');
+    }
 }

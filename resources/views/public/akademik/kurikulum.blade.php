@@ -139,7 +139,7 @@
             </div>
 
             {{-- ── SIDEBAR KANAN ────────────────────────────── --}}
-            <div class="space-y-5">
+            <div class="space-y-5 ">
 
                 {{-- Fakta Kurikulum --}}
                 <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden">

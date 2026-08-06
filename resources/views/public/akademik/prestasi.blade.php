@@ -5,16 +5,11 @@
 
 @include('public.akademik._subnav')
 
-<section class="py-14">
+<section class="py-10">
     <div class="container mx-auto max-w-7xl px-4">
-        <div class="text-center mb-12">
-            <h1 class="section-title mx-auto after:mx-auto">Prestasi Sekolah</h1>
-            <p class="text-gray-500 mt-3">Pencapaian terbaik SMA Negeri 1 Marangkayu</p>
-        </div>
-
         <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @forelse($prestasi as $p)
-            <div class="card-hover group">
+            <a href="{{ route('akademik.prestasi.show', $p) }}" class="card-hover group block">
                 @if($p->foto)
                 <div class="overflow-hidden h-40">
                     <img src="{{ Storage::url($p->foto) }}"
@@ -37,11 +32,16 @@
                         <i class="fa-solid fa-user text-slate-400"></i> {{ $p->peraih }}
                     </p>
                     @endif
+                    @if($p->ekstrakurikuler)
+                    <p class="text-xs text-gray-500 flex items-center gap-1.5 mb-1">
+                        <i class="fa-solid fa-star text-slate-400"></i> {{ $p->ekstrakurikuler->nama }}
+                    </p>
+                    @endif
                     <p class="text-xs text-gray-400 flex items-center gap-1.5">
                         <i class="fa-regular fa-calendar text-slate-400"></i> {{ $p->tahun }}
                     </p>
                 </div>
-            </div>
+            </a>
             @empty
             <div class="col-span-4 rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 md:p-12 text-center">
                 <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl"

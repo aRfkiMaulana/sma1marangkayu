@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Galeri;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GaleriController extends Controller
 {
@@ -23,21 +24,17 @@ class GaleriController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:200',
-            'tipe'  => 'required|in:foto,video',
-            'file'  => 'required_if:tipe,foto|nullable|image|max:4096',
-            'link'  => 'required_if:tipe,video|nullable|url',
+            'file'  => 'required|image|max:4096',
+            'album' => 'nullable|string|max:100',
         ]);
 
-        $data = $request->except(['_token', 'file', 'link']);
-
-        if ($request->tipe === 'foto' && $request->hasFile('file')) {
-            $data['file'] = $request->file('file')->store('galeri', 'public');
-        } elseif ($request->tipe === 'video') {
-            $data['file'] = $request->link;
-        }
+        $data = $request->only(['judul', 'album', 'urutan', 'deskripsi']);
+        $data['tipe']         = 'foto';
+        $data['is_highlight'] = $request->boolean('is_highlight');
+        $data['file']         = $request->file('file')->store('galeri', 'public');
 
         Galeri::create($data);
-        return redirect()->route('admin.galeri.index')->with('success', 'Item galeri berhasil ditambahkan.');
+        return redirect()->route('admin.galeri.index')->with('success', 'Foto berhasil ditambahkan.');
     }
 
     public function edit(Galeri $galeri)
@@ -49,26 +46,30 @@ class GaleriController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:200',
-            'tipe'  => 'required|in:foto,video',
             'file'  => 'nullable|image|max:4096',
-            'link'  => 'nullable|url',
+            'album' => 'nullable|string|max:100',
         ]);
 
-        $data = $request->except(['_token', '_method', 'file', 'link']);
+        $data = $request->only(['judul', 'album', 'urutan', 'deskripsi']);
+        $data['is_highlight'] = $request->boolean('is_highlight');
 
-        if ($request->tipe === 'foto' && $request->hasFile('file')) {
+        if ($request->hasFile('file')) {
+            if ($galeri->file && $galeri->tipe === 'foto') {
+                Storage::disk('public')->delete($galeri->file);
+            }
             $data['file'] = $request->file('file')->store('galeri', 'public');
-        } elseif ($request->tipe === 'video' && $request->link) {
-            $data['file'] = $request->link;
         }
 
         $galeri->update($data);
-        return redirect()->route('admin.galeri.index')->with('success', 'Item galeri berhasil diperbarui.');
+        return redirect()->route('admin.galeri.index')->with('success', 'Foto berhasil diperbarui.');
     }
 
     public function destroy(Galeri $galeri)
     {
+        if ($galeri->file && $galeri->tipe === 'foto') {
+            Storage::disk('public')->delete($galeri->file);
+        }
         $galeri->delete();
-        return redirect()->route('admin.galeri.index')->with('success', 'Item galeri berhasil dihapus.');
+        return redirect()->route('admin.galeri.index')->with('success', 'Foto berhasil dihapus.');
     }
 }

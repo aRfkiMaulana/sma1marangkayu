@@ -2,7 +2,7 @@
 @section('title', 'Berita & Kegiatan - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<section class="py-14">
+<section class="py-5">
     <div class="container mx-auto max-w-7xl px-4">
         <div class="grid lg:grid-cols-3 gap-8">
             {{-- DAFTAR BERITA --}}
@@ -43,8 +43,8 @@
             </div>
 
             {{-- SIDEBAR --}}
-            <aside class="space-y-6">
-                <div class="rounded-xl overflow-hidden shadow-sm border border-slate-100">
+            <aside class="space-y-6 mt-5">
+                <div class="rounded-xl overflow-hidden border border-slate-300">
                     <div class="px-4 py-3 text-sm font-bold text-white" style="background-color: var(--color-primary)">Kategori</div>
                     <ul class="divide-y divide-slate-100">
                         @foreach($kategori as $k)
@@ -59,7 +59,7 @@
                     </ul>
                 </div>
 
-                <div class="rounded-xl overflow-hidden shadow-sm border border-slate-100">
+                <div class="rounded-xl overflow-hidden  border border-slate-300">
                     <div class="px-4 py-3 text-sm font-bold text-white" style="background-color: var(--color-primary)">Berita Terkini</div>
                     <ul class="divide-y divide-slate-100">
                         @foreach($terkini as $t)
