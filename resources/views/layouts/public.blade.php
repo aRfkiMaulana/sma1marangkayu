@@ -19,12 +19,12 @@
 
             {{-- BRAND --}}
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <img src="{{ asset('images/logo.jpg') }}" alt="Logo SMA Negeri 1 Marangkayu"
+                <img src="{{ asset('images/logo1.webp') }}" alt="Logo SMA Negeri 1 Marangkayu"
                      class="w-12 h-auto object-contain flex-shrink-0" style="max-height:56px"
                      onerror="this.style.display='none'">
                 <div class="leading-tight">
-                    <div class="text-lg sm:text-xl font-bold text-gray-800 leading-tight">SMA Negeri 1</div>
-                    <div class="text-sm text-gray-500 leading-snug">Marangkayu</div>
+                    <div class="text-lg sm:text-xl font-bold text-gray-800 leading-tight">SMA NEGERI 1 MARANGKAYU</div>
+                    <div class="text-sm text-gray-500 leading-snug">Kutai Kartanegara, Kalimantan Timur</div>
                 </div>
             </a>
 
@@ -56,10 +56,9 @@
                          x-transition:leave-end="opacity-0"
                          class="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl border border-gray-100 shadow-lg py-1 z-50"
                          @click="open = false" style="display:none">
-                        <a href="{{ route('profil.sejarah') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Sejarah Sekolah</a>
-                        <a href="{{ route('profil.visi-misi') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Visi &amp; Misi</a>
-                        <a href="{{ route('profil.struktur-organisasi') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Guru &amp; Staf</a>
-                        <a href="{{ route('profil.fasilitas') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Fasilitas</a>
+                        <a href="{{ route('profil.sejarah') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium " onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Profil Sekolah</a>
+                        <a href="{{ route('profil.struktur-organisasi') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Guru &amp; Staf</a>
+                        <a href="{{ route('profil.fasilitas') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Fasilitas</a>
                     </div>
                 </div>
 
@@ -82,11 +81,11 @@
                          x-transition:leave-end="opacity-0"
                          class="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl border border-gray-100 shadow-lg py-1 z-50"
                          @click="open = false" style="display:none">
-                        <a href="{{ route('akademik.kurikulum') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kurikulum</a>
-                        <a href="{{ route('akademik.program-studi') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Program Studi</a>
-                        <a href="{{ route('akademik.ekstrakurikuler') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Ekstrakurikuler</a>
-                        <a href="{{ route('akademik.kalender') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kalender Akademik</a>
-                        <a href="{{ route('akademik.prestasi') }}" class="block px-4 py-2.5 text-sm text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Prestasi</a>
+                        <a href="{{ route('akademik.kurikulum') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kurikulum</a>
+                        <a href="{{ route('akademik.program-studi') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Program Studi</a>
+                        <a href="{{ route('akademik.ekstrakurikuler') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Ekstrakurikuler</a>
+                        <a href="{{ route('akademik.kalender') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kalender Akademik</a>
+                        <a href="{{ route('akademik.prestasi') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Prestasi</a>
                     </div>
                 </div>
 
@@ -203,8 +202,8 @@
 <footer class="relative text-gray-300 overflow-hidden mt-16" style="background-color: var(--color-primary-dark)">
     {{-- Background pattern overlay --}}
     <div class="absolute inset-0 opacity-80"
-         style="background-image: url('{{ asset('images/wheat.webp') }}'); background-repeat: repeat; background-position: top left; background-size: 210px;"></div>
-    <div class="absolute inset-0 bg-black/30"></div>
+         style="background-image: url('{{ asset('images/wheat.webp') }}'); background-repeat: repeat; background-position: 0 0; background-size: 250px 240px; image-rendering: pixelated;"></div>
+    <div class="absolute inset-0 bg-black/10"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 items-start">
@@ -212,8 +211,8 @@
             {{-- Brand col --}}
             <div class="lg:col-span-2 flex flex-col items-start">
                 <div class="flex items-center gap-3 mb-8">
-                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo SMA Negeri 1 Marangkayu"
-                         class="w-12 h-12 object-contain" onerror="this.style.display='none'">
+                    <img src="{{ asset('images/logo1.webp') }}" alt="Logo SMA Negeri 1 Marangkayu"
+                         class="w-15 h-18 object-contain" onerror="this.style.display='none'">
                     <div>
                         <div class="font-bold text-lg text-white">SMA Negeri 1 Marangkayu</div>
                         <div class="text-sm text-white/50">Kutai Kartanegara, Kalimantan Timur</div>
@@ -298,7 +297,7 @@
 
 {{-- Bottom bar --}}
 <div class="text-sm" style="background:#111827">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center justify-between gap-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex flex-col md:flex-row items-center justify-between gap-2">
         <p class="text-gray-400">&copy; {{ date('Y') }} SMA Negeri 1 Marangkayu. Hak cipta dilindungi undang-undang.</p>
         <p class="text-gray-400">Dibuat oleh <span class="text-white">arfkimaulana X icong</span></p>
     </div>

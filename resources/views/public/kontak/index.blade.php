@@ -2,23 +2,9 @@
 @section('title', 'Kontak - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<div class="bg-slate-50 border-b border-slate-200 py-3">
-    <div class="container mx-auto max-w-7xl px-4">
-        <nav class="flex items-center gap-2 text-sm text-gray-500">
-            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-            <span class="text-gray-800 font-medium">Kontak</span>
-        </nav>
-    </div>
-</div>
 
 <section class="py-14">
     <div class="container mx-auto max-w-7xl px-4">
-        <div class="text-center mb-12">
-            <h1 class="section-title mx-auto after:mx-auto">Hubungi Kami</h1>
-            <p class="text-gray-500 mt-3">Kami siap membantu pertanyaan Anda</p>
-        </div>
-
         @if(session('success'))
         <div class="flex items-start gap-3 bg-green-50 border border-green-200 text-green-800 rounded-xl px-5 py-4 mb-8">
             <i class="fa-solid fa-circle-check mt-0.5 text-green-500"></i>
@@ -29,7 +15,7 @@
         <div class="grid lg:grid-cols-5 gap-8">
             {{-- INFO KONTAK --}}
             <div class="lg:col-span-2 space-y-4">
-                <div class="rounded-2xl p-6 text-white" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light))">
+                <div class="rounded-4xl p-6 text-white" style="background:var(--color-primary)">
                     <h2 class="font-bold text-lg mb-6">Informasi Kontak</h2>
                     <ul class="space-y-5">
                         <li class="flex gap-4">
@@ -83,7 +69,7 @@
 
             {{-- FORM --}}
             <div class="lg:col-span-3">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
+                <div class="bg-white rounded-4xl border-3 border--300 p-8">
                     <h2 class="font-bold text-lg mb-6" style="color: var(--color-primary)">Kirim Pesan</h2>
                     <form method="POST" action="{{ route('kontak.kirim') }}" class="space-y-4">
                         @csrf

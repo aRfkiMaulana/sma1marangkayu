@@ -8,16 +8,20 @@ use App\Models\Fasilitas;
 
 class ProfilController extends Controller
 {
-    public function sejarah()
+    public function profilSekolah()
     {
         $profil = ProfilSekolah::first();
-        return view('public.profil.sejarah', compact('profil'));
+        return view('public.profil.profil-sekolah', compact('profil'));
+    }
+
+    public function sejarah()
+    {
+        return redirect()->route('profil.profil-sekolah');
     }
 
     public function visiMisi()
     {
-        $profil = ProfilSekolah::first();
-        return view('public.profil.visi-misi', compact('profil'));
+        return redirect()->route('profil.profil-sekolah');
     }
 
     public function strukturOrganisasi()

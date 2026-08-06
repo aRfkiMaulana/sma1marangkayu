@@ -2,18 +2,6 @@
 @section('title', 'Kategori: ' . $kategori->nama . ' - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<div class="bg-slate-50 border-b border-slate-200 py-3">
-    <div class="container mx-auto max-w-7xl px-4">
-        <nav class="flex items-center gap-2 text-sm text-gray-500">
-            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-            <a href="{{ route('berita.index') }}" class="hover:text-blue-800">Berita</a>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-            <span class="text-gray-800 font-medium">{{ $kategori->nama }}</span>
-        </nav>
-    </div>
-</div>
-
 <section class="py-14">
     <div class="container mx-auto max-w-7xl px-4">
         <h2 class="section-title mb-8">Kategori: {{ $kategori->nama }}</h2>

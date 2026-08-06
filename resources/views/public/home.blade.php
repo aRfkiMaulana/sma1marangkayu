@@ -62,18 +62,14 @@
     <div class="container mx-auto max-w-7xl px-4">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             @php $stats = [
-                ['num' => $profil->jumlah_siswa ?? 600, 'label' => 'Siswa Aktif',     'icon' => 'fa-users'],
-                ['num' => $profil->jumlah_guru ?? 45,  'label' => 'Tenaga Pendidik',  'icon' => 'fa-chalkboard-user'],
-                ['num' => ($prestasi->count() ?: 50) . '+', 'label' => 'Prestasi',   'icon' => 'fa-trophy'],
-                ['num' => ($profil->tahun_berdiri ? date('Y') - $profil->tahun_berdiri : 30) . '+', 'label' => 'Tahun Berdiri', 'icon' => 'fa-calendar-check'],
+                ['num' => $profil->jumlah_siswa ?? 600, 'label' => 'Siswa Aktif'],
+                ['num' => $profil->jumlah_guru ?? 45,  'label' => 'Tenaga Pendidik'],
+                ['num' => ($prestasi->count() ?: 50) . '+', 'label' => 'Prestasi'],
+                ['num' => ($profil->tahun_berdiri ? date('Y') - $profil->tahun_berdiri : 30) . '+', 'label' => 'Tahun Berdiri'],
             ]; @endphp
             @foreach($stats as $i => $s)
-            <div class="rounded-2xl p-6 text-center text-white shadow-lg"
-                 style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light))">
-                <div class="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center text-xl"
-                     style="background-color: rgba(255,255,255,0.15)">
-                    <i class="fa-solid {{ $s['icon'] }}"></i>
-                </div>
+            <div class="rounded-2xl p-6 text-center text-white"
+                 style="background:var(--color-primary); background-image: url('{{ asset('images/wheat.webp') }}'); background-repeat: repeat; background-position: 0 0; background-size: 180px 180px; image-rendering: pixelated;">
                 <div class="text-3xl font-bold" style="color: var(--color-accent)">{{ $s['num'] }}</div>
                 <div class="text-sm text-white/80 mt-1">{{ $s['label'] }}</div>
             </div>
@@ -88,40 +84,52 @@
         <div class="flex items-end justify-between mb-8">
             <h2 class="section-title">Berita &amp; Pengumuman</h2>
             <a href="{{ route('berita.index') }}" class="btn-outline text-sm py-2 px-4">
-                Lihat Semua <i class="fa-solid fa-arrow-right ml-1"></i>
+                Lihat Semua
             </a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @forelse($berita as $b)
-            <article class="card-hover flex flex-col group">
-                <div class="overflow-hidden h-48">
-                    <img src="{{ $b->thumbnail ? Storage::url($b->thumbnail) : 'https://placehold.co/600x350/1a3d6e/fff?text=Berita' }}"
-                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                         alt="{{ $b->judul }}">
-                </div>
-                <div class="p-5 flex flex-col flex-1">
-                    <div class="flex gap-2 mb-3">
-                        <span class="badge badge-primary">{{ ucfirst($b->tipe) }}</span>
-                        @if($b->kategori)
-                        <span class="badge badge-accent">{{ $b->kategori->nama }}</span>
-                        @endif
+
+        @if($berita->count())
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($berita as $b)
+                <article class="card-hover flex flex-col group">
+                    <div class="overflow-hidden h-48">
+                        <img src="{{ $b->thumbnail ? Storage::url($b->thumbnail) : 'https://placehold.co/600x350/1a3d6e/fff?text=Berita' }}"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             alt="{{ $b->judul }}">
                     </div>
-                    <h3 class="font-semibold text-gray-800 mb-2 leading-snug flex-1 group-hover:text-blue-800 transition-colors">
-                        <a href="{{ route('berita.show', $b->slug) }}" class="stretched-link">
-                            {{ Str::limit($b->judul, 65) }}
-                        </a>
-                    </h3>
-                    <p class="text-gray-500 text-sm mb-4">{{ Str::limit($b->ringkasan ?? strip_tags($b->konten), 90) }}</p>
-                    <div class="mt-auto flex items-center gap-2 text-xs text-gray-400">
-                        <i class="fa-regular fa-calendar"></i>
-                        {{ optional($b->tanggal_publish)->translatedFormat('d M Y') ?? $b->created_at->translatedFormat('d M Y') }}
+                    <div class="p-5 flex flex-col flex-1">
+                        <div class="flex gap-2 mb-3">
+                            <span class="badge badge-primary">{{ ucfirst($b->tipe) }}</span>
+                            @if($b->kategori)
+                            <span class="badge badge-accent">{{ $b->kategori->nama }}</span>
+                            @endif
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-2 leading-snug flex-1 group-hover:text-blue-800 transition-colors">
+                            <a href="{{ route('berita.show', $b->slug) }}" class="stretched-link">
+                                {{ Str::limit($b->judul, 65) }}
+                            </a>
+                        </h3>
+                        <p class="text-gray-500 text-sm mb-4">{{ Str::limit($b->ringkasan ?? strip_tags($b->konten), 90) }}</p>
+                        <div class="mt-auto flex items-center gap-2 text-xs text-gray-400">
+                            <i class="fa-regular fa-calendar"></i>
+                            {{ optional($b->tanggal_publish)->translatedFormat('d M Y') ?? $b->created_at->translatedFormat('d M Y') }}
+                        </div>
                     </div>
+                </article>
+                @endforeach
+            </div>
+        @else
+            <div class="rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 md:p-12 text-center">
+                <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl"
+                     style="color: var(--color-primary)">
+                    <i class="fa-regular fa-newspaper"></i>
                 </div>
-            </article>
-            @empty
-            <div class="col-span-3 text-center text-gray-400 py-12">Belum ada berita tersedia.</div>
-            @endforelse
-        </div>
+                <h3 class="text-xl font-semibold text-gray-700">Belum ada berita terbaru</h3>
+                <p class="mt-2 text-sm text-gray-500">
+                    Informasi dan pengumuman terbaru akan tampil di sini setelah dipublikasikan.
+                </p>
+            </div>
+        @endif
     </div>
 </section>
 
@@ -131,23 +139,20 @@
     <div class="container mx-auto max-w-7xl px-4">
         <div class="grid md:grid-cols-2 gap-8 items-stretch">
             <div class="rounded-2xl p-8 text-white flex flex-col"
-                 style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light))">
+                 style="background-image: url('{{ asset('images/wheat.webp') }}'); background-repeat: repeat; background-position: 0 0; background-size: 180px 180px; image-rendering: pixelated;">
                 <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center text-xl"
                      style="background-color: rgba(255,255,255,0.15)">
                     <i class="fa-solid fa-eye"></i>
                 </div>
-                <h3 class="text-lg font-bold mb-3" style="color: var(--color-accent)">VISI</h3>
+                <h3 class="text-lg font-bold" style="color: var(--color-accent)">VISI</h3>
                 <p class="text-white/85 leading-relaxed flex-1">{{ $profil->visi ?? 'Belum diisi.' }}</p>
-                <a href="{{ route('profil.visi-misi') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-yellow-400 hover:text-yellow-300 transition-colors">
-                    Selengkapnya <i class="fa-solid fa-arrow-right"></i>
-                </a>
             </div>
-            <div class="rounded-2xl p-8 bg-white shadow-sm flex flex-col border border-gray-100">
+            <div class="rounded-2xl p-8 bg-white flex flex-col border border-gray-300">
                 <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center text-xl"
                      style="background-color: #dbeafe; color: var(--color-primary)">
-                    <i class="fa-solid fa-list-check"></i>
+                    <i class="fa-solid fa-list-check"></i> 
                 </div>
-                <h3 class="text-lg font-bold mb-3" style="color: var(--color-primary)">MISI</h3>
+                <h3 class="text-lg font-bold " style="color: var(--color-primary)">MISI</h3>
                 <div class="text-gray-600 leading-relaxed text-sm flex-1 whitespace-pre-line">{{ $profil->misi ?? 'Belum diisi.' }}</div>
             </div>
         </div>
@@ -156,27 +161,39 @@
 @endif
 
 {{-- GALERI HIGHLIGHT --}}
-@if($galeri->count())
 <section class="py-16">
     <div class="container mx-auto max-w-7xl px-4">
         <div class="flex items-end justify-between mb-8">
             <h2 class="section-title">Galeri Foto</h2>
             <a href="{{ route('galeri.index') }}" class="btn-outline text-sm py-2 px-4">
-                Lihat Semua <i class="fa-solid fa-arrow-right ml-1"></i>
+                Lihat Semua
             </a>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            @foreach($galeri as $g)
-            <div class="overflow-hidden rounded-xl group cursor-pointer aspect-square">
-                <img src="{{ $g->tipe === 'foto' ? Storage::url($g->file) : 'https://placehold.co/400x400/1a3d6e/fff?text=Video' }}"
-                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                     alt="{{ $g->judul }}">
+
+        @if($galeri->count())
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                @foreach($galeri as $g)
+                <div class="overflow-hidden rounded-xl group cursor-pointer aspect-square">
+                    <img src="{{ $g->tipe === 'foto' ? Storage::url($g->file) : 'https://placehold.co/400x400/1a3d6e/fff?text=Video' }}"
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                         alt="{{ $g->judul }}">
+                </div>
+                @endforeach
             </div>
-            @endforeach
-        </div>
+        @else
+            <div class="rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 md:p-12 text-center">
+                <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl"
+                     style="color: var(--color-primary)">
+                    <i class="fa-regular fa-image"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700">Belum ada highlight galeri</h3>
+                <p class="mt-2 text-sm text-gray-500">
+                    Foto atau video unggulan akan ditampilkan di sini setelah ditambahkan.
+                </p>
+            </div>
+        @endif
     </div>
 </section>
-@endif
 
 @push('scripts')
 <script>

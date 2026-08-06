@@ -51,18 +51,13 @@
     }
     .btn-outline:hover {
         background-color: var(--color-primary);
-        @apply text-white shadow-md -translate-y-0.5;
+        @apply text-white;
     }
 
     /* ── SECTION TITLE ── */
     .section-title {
-        @apply text-2xl font-bold pb-3 relative inline-block;
+        @apply text-3xl font-bold pb-3 relative inline-block;
         color: var(--color-primary);
-    }
-    .section-title::after {
-        content: '';
-        @apply absolute bottom-0 left-0 h-1 w-12 rounded-full;
-        background-color: var(--color-accent);
     }
 
     /* ── CARD ── */

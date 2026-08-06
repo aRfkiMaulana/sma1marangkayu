@@ -21,6 +21,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Profil
 Route::prefix('profil')->name('profil.')->group(function () {
+    Route::get('/profil-sekolah', [ProfilController::class, 'profilSekolah'])->name('profil-sekolah');
     Route::get('/sejarah', [ProfilController::class, 'sejarah'])->name('sejarah');
     Route::get('/visi-misi', [ProfilController::class, 'visiMisi'])->name('visi-misi');
     Route::get('/struktur-organisasi', [ProfilController::class, 'strukturOrganisasi'])->name('struktur-organisasi');
