@@ -4,21 +4,16 @@
 @section('content')
 @include('public.profil._subnav')
 
-<section class="py-14">
+<section class="py-10">
     <div class="container mx-auto max-w-7xl px-4">
-        <div class="text-center mb-12">
-            <h1 class="section-title mx-auto after:mx-auto">Tenaga Pendidik &amp; Staf</h1>
-            <p class="text-gray-500 mt-3">SMA Negeri 1 Marangkayu</p>
-        </div>
 
         {{-- GURU --}}
         <div class="mb-14">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm"
-                     style="background-color: var(--color-primary)">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                </div>
-                <h2 class="text-lg font-bold" style="color: var(--color-primary)">Tenaga Pendidik (Guru)</h2>
+            <div class="flex items-center gap-3">
+                <h2 class="text-3xl font-bold mb-5 flex items-center gap-2" style="color:var(--color-primary)">
+                    <x-icons.index name="ekskul-mascot" width="60px" height="60px" />
+                    Tenaga Pendidik / Guru
+                </h2>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
                 @forelse($guru as $g)
@@ -45,12 +40,11 @@
 
         {{-- STAF --}}
         <div>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm"
-                     style="background-color: var(--color-accent)">
-                    <i class="fa-solid fa-users"></i>
-                </div>
-                <h2 class="text-lg font-bold" style="color: var(--color-primary)">Staf / Tata Usaha</h2>
+            <div class="flex items-center gap-3">
+                <h2 class="text-3xl font-bold mb-5 flex items-center gap-2" style="color:var(--color-primary)">
+                    <x-icons.index name="staf" width="65px" height="65px" />
+                    Staf / Tata Usaha
+                </h2>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
                 @forelse($staf as $s)

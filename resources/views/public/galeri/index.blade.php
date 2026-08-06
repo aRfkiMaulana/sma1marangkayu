@@ -2,7 +2,7 @@
 @section('title', 'Galeri - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<section class="py-10">
+<section class="py-8">
     <div class="container mx-auto max-w-7xl px-4">
         <div class="text-center mb-7">
             <h1 class="section-title mx-auto after:mx-auto">Galeri Foto</h1>

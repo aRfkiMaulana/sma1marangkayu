@@ -156,7 +156,7 @@
             </div>
 
             {{-- ── SIDEBAR ──────────────────────────────────── --}}
-            <div class="space-y-5">
+            <div class="space-y-5 lg:sticky lg:top-40 self-start">
 
                 {{-- Info card --}}
                 <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
@@ -201,7 +201,7 @@
                         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Ekskul Lainnya</p>
                     </div>
                     <div class="divide-y divide-gray-50">
-                        @foreach($lainnya as $l)
+                        @foreach($lainnya->take(3) as $l)
                         <a href="{{ route('akademik.ekstrakurikuler.show', $l) }}"
                            class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
                             <div class="w-9 h-9 rounded-lg overflow-hidden shrink-0">
@@ -225,13 +225,6 @@
                             </div>
                         </a>
                         @endforeach
-                    </div>
-                    <div class="px-5 py-3 border-t border-gray-100">
-                        <a href="{{ route('akademik.ekstrakurikuler') }}"
-                           class="text-xs font-semibold transition-colors"
-                           style="color:var(--color-primary)">
-                            Lihat semua ekstrakurikuler →
-                        </a>
                     </div>
                 </div>
                 @endif

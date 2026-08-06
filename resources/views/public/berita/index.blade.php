@@ -7,10 +7,10 @@
         <div class="grid lg:grid-cols-3 gap-8">
             {{-- DAFTAR BERITA --}}
             <div class="lg:col-span-2">
-                <h2 class="section-title mb-8">Berita &amp; Kegiatan</h2>
+                <h2 class="section-title">Berita &amp; Kegiatan</h2>
                 <div class="grid sm:grid-cols-2 gap-6">
                     @forelse($berita as $b)
-                    <article class="card-hover flex flex-col group">
+                    <article class="card-hover flex flex-col group relative">
                         <div class="overflow-hidden h-44">
                             <img src="{{ $b->thumbnail ? Storage::url($b->thumbnail) : 'https://placehold.co/600x350/1a3d6e/fff?text=Berita' }}"
                                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -19,7 +19,7 @@
                         <div class="p-4 flex flex-col flex-1">
                             <span class="badge badge-primary mb-2 self-start">{{ ucfirst($b->tipe) }}</span>
                             <h3 class="font-semibold text-gray-800 text-sm mb-2 flex-1 group-hover:text-blue-800 transition-colors">
-                                <a href="{{ route('berita.show', $b->slug) }}">{{ Str::limit($b->judul, 70) }}</a>
+                                <a href="{{ route('berita.show', $b->slug) }}" class="stretched-link">{{ Str::limit($b->judul, 70) }}</a>
                             </h3>
                             <p class="text-gray-500 text-xs mb-3">{{ Str::limit(strip_tags($b->konten), 90) }}</p>
                             <div class="text-xs text-gray-400 flex items-center gap-1 mt-auto">

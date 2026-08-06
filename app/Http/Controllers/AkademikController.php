@@ -15,8 +15,27 @@ class AkademikController extends Controller
 
     public function ekstrakurikuler()
     {
-        $ekskul = Ekstrakurikuler::with('personel')->where('is_aktif', true)->get();
-        return view('public.akademik.ekstrakurikuler', compact('ekskul'));
+        $ekskul = Ekstrakurikuler::with(['personel', 'prestasi'])->where('is_aktif', true)->get();
+
+        // Bobot poin per tingkat prestasi
+        $bobot = [
+            'internasional' => 100,
+            'nasional'      => 75,
+            'provinsi'      => 50,
+            'kabupaten'     => 30,
+            'kecamatan'     => 20,
+            'sekolah'       => 10,
+        ];
+
+        // Hitung skor tiap ekskul dan beri properti sementara
+        $ekskul->each(function ($e) use ($bobot) {
+            $e->skor_prestasi = $e->prestasi->sum(fn($p) => $bobot[$p->tingkat] ?? 0);
+        });
+
+        // Rangking: urutkan descending berdasarkan skor, ambil top 5
+        $rangking = $ekskul->sortByDesc('skor_prestasi')->values()->take(5);
+
+        return view('public.akademik.ekstrakurikuler', compact('ekskul', 'rangking'));
     }
 
     public function ekstrakurikulerShow(Ekstrakurikuler $ekstrakurikuler)

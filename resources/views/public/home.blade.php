@@ -81,7 +81,7 @@
 {{-- BERITA TERBARU --}}
 <section class="py-16">
     <div class="container mx-auto max-w-7xl px-4">
-        <div class="flex items-end justify-between mb-8">
+        <div class="flex items-end justify-between mb-4">
             <h2 class="section-title">Berita &amp; Pengumuman</h2>
             <a href="{{ route('berita.index') }}" class="btn-outline text-sm py-2 px-4">
                 Lihat Semua
@@ -91,7 +91,7 @@
         @if($berita->count())
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($berita as $b)
-                <article class="card-hover flex flex-col group">
+                <article class="card-hover flex flex-col group relative">
                     <div class="overflow-hidden h-48">
                         <img src="{{ $b->thumbnail ? Storage::url($b->thumbnail) : 'https://placehold.co/600x350/1a3d6e/fff?text=Berita' }}"
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

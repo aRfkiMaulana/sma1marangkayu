@@ -83,9 +83,7 @@
             </div>
 
             {{-- ── SIDEBAR ──────────────────────────────────── --}}
-            <div class="space-y-5">
-
-                {{-- Detail info --}}
+            <div class="space-y-5 lg:sticky lg:top-40 self-start">
                 <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                     <div class="px-5 py-3 border-b border-gray-100"
                          style="background:linear-gradient(to right, color-mix(in srgb, var(--color-primary) 8%, white), white)">
@@ -122,7 +120,7 @@
                         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Prestasi Lainnya</p>
                     </div>
                     <div class="divide-y divide-gray-50">
-                        @foreach($lainnya as $l)
+                        @foreach($lainnya->take(3) as $l)
                         <a href="{{ route('akademik.prestasi.show', $l) }}"
                            class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
                             <div class="w-10 h-10 rounded-lg overflow-hidden shrink-0 flex-shrink-0">
@@ -144,15 +142,6 @@
                             </div>
                         </a>
                         @endforeach
-                    </div>
-                    <div class="px-5 py-3 border-t border-gray-100">
-                        <a href="{{ route('akademik.prestasi') }}"
-                           class="text-xs font-semibold transition-colors"
-                           style="color:var(--color-primary)"
-                           onmouseover="this.style.color='var(--color-primary-dark)'"
-                           onmouseout="this.style.color='var(--color-primary)'">
-                            Lihat semua prestasi →
-                        </a>
                     </div>
                 </div>
                 @endif

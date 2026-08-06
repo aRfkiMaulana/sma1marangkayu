@@ -35,15 +35,20 @@
             <div class="lg:col-span-2 space-y-6">
 
                 {{-- Apa itu Kurikulum Merdeka --}}
-                <div class="bg-white rounded-2xl p-6 border border-gray-200">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-book-open w-6 h-6 text-lg" style="color:var(--color-primary)"></i>
-                        Apa itu Kurikulum Merdeka?
-                    </h2>
-                    <div class="space-y-3 text-sm text-gray-600 leading-relaxed">
-                        <p><strong class="text-gray-900">Kurikulum Merdeka</strong> adalah kurikulum dengan pembelajaran intrakurikuler yang beragam, di mana konten akan lebih optimal agar siswa memiliki cukup waktu untuk mendalami konsep dan menguatkan kompetensi.</p>
-                        <p>Kurikulum ini memberikan keleluasaan bagi guru untuk memilih perangkat ajar yang sesuai dengan kebutuhan dan karakteristik peserta didik, serta memberikan ruang bagi satuan pendidikan untuk mengembangkan kurikulum operasional sesuai kondisi setempat.</p>
-                        <p>Di SMAN 1 Marangkayu, Kurikulum Merdeka diterapkan secara penuh mulai tahun ajaran 2023/2024 dengan pendekatan pembelajaran berbasis proyek (<strong class="text-gray-900">Project-Based Learning</strong>) dan penguatan profil pelajar Pancasila.</p>
+                <div class="relative overflow-hidden bg-white rounded-2xl p-6 border border-gray-200">
+                    <div class="absolute -bottom-9 -right-4 opacity-90 pointer-events-none">
+                        <x-icons.index name="orang" width="180px" height="230px" />
+                    </div>
+                    <div class="relative z-10">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-book-open w-6 h-6 text-lg" style="color:var(--color-primary)"></i>
+                            Apa itu Kurikulum Merdeka?
+                        </h2>
+                        <div class="space-y-3 text-sm text-gray-600 leading-relaxed">
+                            <p><strong class="text-gray-900">Kurikulum Merdeka</strong> adalah kurikulum dengan pembelajaran intrakurikuler yang beragam, di mana konten akan lebih optimal agar siswa memiliki cukup waktu untuk mendalami konsep dan menguatkan kompetensi.</p>
+                            <p>Kurikulum ini memberikan keleluasaan bagi guru untuk memilih perangkat ajar yang sesuai dengan kebutuhan<br> dan karakteristik peserta didik, serta memberikan ruang bagi satuan pendidikan untuk mengembangkan<br> kurikulum operasional sesuai kondisi setempat.</p>
+                            <p>Di SMAN 1 Marangkayu, Kurikulum Merdeka diterapkan secara penuh mulai tahun ajaran 2023/2024<br> dengan pendekatan pembelajaran berbasis proyek (<strong class="text-gray-900">Project-Based Learning</strong>) dan penguatan profil<br> pelajar Pancasila.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -139,7 +144,7 @@
             </div>
 
             {{-- ── SIDEBAR KANAN ────────────────────────────── --}}
-            <div class="space-y-5 ">
+            <div class="space-y-5 lg:sticky lg:top-40 self-start">
 
                 {{-- Fakta Kurikulum --}}
                 <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
