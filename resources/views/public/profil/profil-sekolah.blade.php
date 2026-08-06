@@ -3,21 +3,10 @@
 
 @section('content')
 
-{{-- Breadcrumb --}}
-<div class="bg-slate-50 border-b border-slate-200 py-3">
-    <div class="container mx-auto max-w-7xl px-4">
-        <nav class="flex items-center gap-2 text-sm text-gray-500">
-            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-            <span>Profil</span>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-            <span class="text-gray-800 font-medium">Profil Sekolah</span>
-        </nav>
-    </div>
-</div>
+@include('public.profil._subnav')
 
 <section class="py-8 pb-10 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4">
         <div class="grid lg:grid-cols-3 gap-8">
 
             {{-- ── SIDEBAR KIRI ─────────────────────────────── --}}
@@ -199,7 +188,7 @@
                         <i class="fa-solid fa-map-location-dot w-6 h-6 text-lg" style="color:var(--color-primary)"></i>
                         Lokasi Sekolah
                     </h2>
-                    <div class="rounded-xl overflow-hidden border border-gray-200 aspect-video">
+                    <div class="rounded-xl overflow-hidden border border-gray-200">
                         {!! $profil->maps_embed !!}
                     </div>
                 </div>

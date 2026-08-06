@@ -2,15 +2,7 @@
 @section('title', 'Fasilitas - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<div class="bg-slate-50 border-b border-slate-200 py-3">
-    <div class="container mx-auto max-w-7xl px-4">
-        <nav class="flex items-center gap-2 text-sm text-gray-500">
-            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-            <span class="text-gray-800 font-medium">Fasilitas</span>
-        </nav>
-    </div>
-</div>
+@include('public.profil._subnav')
 
 <section class="py-14">
     <div class="container mx-auto max-w-7xl px-4">
@@ -43,9 +35,13 @@
                 </div>
             </div>
             @empty
-            <div class="col-span-4 text-center text-gray-400 py-16">
-                <i class="fa-solid fa-building text-4xl mb-3 block text-slate-300"></i>
-                Data fasilitas belum tersedia.
+            <div class="col-span-4 rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 md:p-12 text-center">
+                <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl"
+                     style="color:var(--color-primary)">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700">Belum ada data fasilitas</h3>
+                <p class="mt-2 text-sm text-gray-500">Sarana dan prasarana sekolah akan tampil di sini setelah ditambahkan.</p>
             </div>
             @endforelse
         </div>

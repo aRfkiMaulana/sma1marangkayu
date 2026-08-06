@@ -10,19 +10,12 @@ class AkademikController extends Controller
 {
     public function kurikulum()
     {
-        $data = Akademik::where('tipe', 'kurikulum')->where('is_aktif', true)->first();
-        return view('public.akademik.kurikulum', compact('data'));
-    }
-
-    public function programStudi()
-    {
-        $data = Akademik::where('tipe', 'program_studi')->where('is_aktif', true)->get();
-        return view('public.akademik.program-studi', compact('data'));
+        return view('public.akademik.kurikulum');
     }
 
     public function ekstrakurikuler()
     {
-        $ekskul = Ekstrakurikuler::where('is_aktif', true)->get();
+        $ekskul = Ekstrakurikuler::with('personel')->where('is_aktif', true)->get();
         return view('public.akademik.ekstrakurikuler', compact('ekskul'));
     }
 

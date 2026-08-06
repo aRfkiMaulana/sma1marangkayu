@@ -45,9 +45,13 @@
                 @endif
             </div>
             @empty
-            <div class="col-span-4 text-center text-gray-400 py-16">
-                <i class="fa-solid fa-images text-4xl mb-3 block text-slate-300"></i>
-                Galeri masih kosong.
+            <div class="col-span-4 rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 md:p-12 text-center">
+                <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl"
+                     style="color:var(--color-primary)">
+                    <i class="fa-solid fa-images"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700">Galeri masih kosong</h3>
+                <p class="mt-2 text-sm text-gray-500">Foto dan video dokumentasi kegiatan sekolah akan tampil di sini.</p>
             </div>
             @endforelse
         </div>

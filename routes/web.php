@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\GuruStafController;
 use App\Http\Controllers\Admin\PesanController;
 use App\Http\Controllers\Admin\FasilitasController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\EkstrakurikulerController;
+use App\Http\Controllers\Admin\PrestasiController;
 
 // ─── PUBLIC ROUTES ───────────────────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,7 +33,6 @@ Route::prefix('profil')->name('profil.')->group(function () {
 // Akademik
 Route::prefix('akademik')->name('akademik.')->group(function () {
     Route::get('/kurikulum', [AkademikController::class, 'kurikulum'])->name('kurikulum');
-    Route::get('/program-studi', [AkademikController::class, 'programStudi'])->name('program-studi');
     Route::get('/ekstrakurikuler', [AkademikController::class, 'ekstrakurikuler'])->name('ekstrakurikuler');
     Route::get('/kalender', [AkademikController::class, 'kalender'])->name('kalender');
     Route::get('/prestasi', [AkademikController::class, 'prestasi'])->name('prestasi');
@@ -80,6 +81,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     // Slider
     Route::resource('slider', SliderController::class)->except(['show']);
+
+    // Ekstrakurikuler
+    Route::resource('ekstrakurikuler', EkstrakurikulerController::class)->except(['show']);
+
+    // Prestasi
+    Route::resource('prestasi', PrestasiController::class)->except(['show']);
 
     // Pesan
     Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');

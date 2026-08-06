@@ -75,6 +75,16 @@
                 @endif
             </a>
 
+            <p class="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-widest text-white/35">Akademik</p>
+            <a href="{{ route('admin.ekstrakurikuler.index') }}"
+               class="sidebar-link {{ request()->routeIs('admin.ekstrakurikuler.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-star w-5 text-center"></i> Ekstrakurikuler
+            </a>
+            <a href="{{ route('admin.prestasi.index') }}"
+               class="sidebar-link {{ request()->routeIs('admin.prestasi.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-trophy w-5 text-center"></i> Prestasi
+            </a>
+
             <p class="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-widest text-white/35">Pengaturan</p>
             <a href="{{ route('admin.profil.edit') }}"
                class="sidebar-link {{ request()->routeIs('admin.profil.*') ? 'active' : '' }}">

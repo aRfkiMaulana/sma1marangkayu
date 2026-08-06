@@ -45,7 +45,7 @@
 
     .btn-outline {
         @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold
-               border-2 transition-all duration-200 cursor-pointer select-none;
+               border-2 transition-all duration-200 cursor-pointer select-none shrink-0;
         border-color: var(--color-primary);
         color: var(--color-primary);
     }

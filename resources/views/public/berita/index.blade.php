@@ -29,7 +29,14 @@
                         </div>
                     </article>
                     @empty
-                    <div class="col-span-2 text-center text-gray-400 py-16">Belum ada berita.</div>
+                    <div class="col-span-2 rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 md:p-12 text-center">
+                        <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl"
+                             style="color:var(--color-primary)">
+                            <i class="fa-regular fa-newspaper"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-700">Belum ada berita terbaru</h3>
+                        <p class="mt-2 text-sm text-gray-500">Informasi dan pengumuman terbaru akan tampil di sini setelah dipublikasikan.</p>
+                    </div>
                     @endforelse
                 </div>
                 <div class="mt-8">{{ $berita->links() }}</div>

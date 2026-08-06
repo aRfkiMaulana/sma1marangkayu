@@ -15,4 +15,9 @@ class Ekstrakurikuler extends Model
     protected $casts = [
         'is_aktif' => 'boolean',
     ];
+
+    public function personel()
+    {
+        return $this->hasMany(EkskulPersonel::class)->orderBy('urutan');
+    }
 }

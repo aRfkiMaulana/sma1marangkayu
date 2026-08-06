@@ -10,7 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased min-h-screen flex flex-col">
 
 {{-- NAVBAR --}}
 <nav class="shadow-sm border-b border-gray-100 sticky top-0 z-50 bg-white">
@@ -82,7 +82,6 @@
                          class="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl border border-gray-100 shadow-lg py-1 z-50"
                          @click="open = false" style="display:none">
                         <a href="{{ route('akademik.kurikulum') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kurikulum</a>
-                        <a href="{{ route('akademik.program-studi') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Program Studi</a>
                         <a href="{{ route('akademik.ekstrakurikuler') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Ekstrakurikuler</a>
                         <a href="{{ route('akademik.kalender') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kalender Akademik</a>
                         <a href="{{ route('akademik.prestasi') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Prestasi</a>
@@ -167,7 +166,6 @@
                 </button>
                 <div x-show="akademik" class="bg-gray-50" style="display:none">
                     <a href="{{ route('akademik.kurikulum') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kurikulum</a>
-                    <a href="{{ route('akademik.program-studi') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Program Studi</a>
                     <a href="{{ route('akademik.ekstrakurikuler') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Ekstrakurikuler</a>
                     <a href="{{ route('akademik.kalender') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kalender Akademik</a>
                     <a href="{{ route('akademik.prestasi') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Prestasi</a>
@@ -194,12 +192,12 @@
 </nav>
 
 {{-- CONTENT --}}
-<main>
+<main class="flex-1">
     @yield('content')
 </main>
 
 {{-- FOOTER --}}
-<footer class="relative text-gray-300 overflow-hidden mt-16" style="background-color: var(--color-primary-dark)">
+<footer class="relative text-gray-300 overflow-hidden mt-auto" style="background-color: var(--color-primary-dark)">
     {{-- Background pattern overlay --}}
     <div class="absolute inset-0 opacity-80"
          style="background-image: url('{{ asset('images/wheat.webp') }}'); background-repeat: repeat; background-position: 0 0; background-size: 250px 240px; image-rendering: pixelated;"></div>
@@ -259,7 +257,6 @@
                 <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-3">Akademik</h4>
                 <ul class="space-y-2 text-sm text-white/60">
                     <li><a href="{{ route('akademik.kurikulum') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Kurikulum</a></li>
-                    <li><a href="{{ route('akademik.program-studi') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Program Studi</a></li>
                     <li><a href="{{ route('akademik.ekstrakurikuler') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Ekstrakurikuler</a></li>
                     <li><a href="{{ route('akademik.kalender') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Kalender Akademik</a></li>
                     <li><a href="{{ route('akademik.prestasi') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Prestasi</a></li>

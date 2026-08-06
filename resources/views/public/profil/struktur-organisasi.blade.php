@@ -2,15 +2,7 @@
 @section('title', 'Guru & Staf - SMA Negeri 1 Marangkayu')
 
 @section('content')
-<div class="bg-slate-50 border-b border-slate-200 py-3">
-    <div class="container mx-auto max-w-7xl px-4">
-        <nav class="flex items-center gap-2 text-sm text-gray-500">
-            <a href="{{ route('home') }}" class="hover:text-blue-800">Beranda</a>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-            <span class="text-gray-800 font-medium">Guru &amp; Staf</span>
-        </nav>
-    </div>
-</div>
+@include('public.profil._subnav')
 
 <section class="py-14">
     <div class="container mx-auto max-w-7xl px-4">
@@ -39,7 +31,14 @@
                     <p class="text-xs text-gray-400 mt-0.5">{{ $g->jabatan ?? $g->mata_pelajaran ?? '' }}</p>
                 </div>
                 @empty
-                <div class="col-span-6 text-center text-gray-400 py-10">Data guru belum tersedia.</div>
+                <div class="col-span-6 rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 text-center">
+                    <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl"
+                         style="color:var(--color-primary)">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-700">Belum ada data guru</h3>
+                    <p class="mt-2 text-sm text-gray-500">Data tenaga pendidik akan tampil di sini setelah ditambahkan.</p>
+                </div>
                 @endforelse
             </div>
         </div>
@@ -64,7 +63,14 @@
                     <p class="text-xs text-gray-400 mt-0.5">{{ $s->jabatan ?? '' }}</p>
                 </div>
                 @empty
-                <div class="col-span-6 text-center text-gray-400 py-10">Data staf belum tersedia.</div>
+                <div class="col-span-6 rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8 text-center">
+                    <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl"
+                         style="color:var(--color-primary)">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-700">Belum ada data staf</h3>
+                    <p class="mt-2 text-sm text-gray-500">Data staf dan tata usaha akan tampil di sini setelah ditambahkan.</p>
+                </div>
                 @endforelse
             </div>
         </div>

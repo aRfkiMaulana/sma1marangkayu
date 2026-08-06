@@ -140,20 +140,41 @@
         <div class="grid md:grid-cols-2 gap-8 items-stretch">
             <div class="rounded-2xl p-8 text-white flex flex-col"
                  style="background-image: url('{{ asset('images/wheat.webp') }}'); background-repeat: repeat; background-position: 0 0; background-size: 180px 180px; image-rendering: pixelated;">
-                <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center text-xl"
-                     style="background-color: rgba(255,255,255,0.15)">
-                    <i class="fa-solid fa-eye"></i>
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                         style="background: rgba(255, 255, 255, 0.15)">
+                        <i class="fa-solid fa-eye text-white text-sm"></i>
+                    </div>
+                    <h3 class="text-lg font-bold" style="color: var(--color-accent)">VISI</h3>
                 </div>
-                <h3 class="text-lg font-bold" style="color: var(--color-accent)">VISI</h3>
                 <p class="text-white/85 leading-relaxed flex-1">{{ $profil->visi ?? 'Belum diisi.' }}</p>
             </div>
-            <div class="rounded-2xl p-8 bg-white flex flex-col border border-gray-300">
-                <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center text-xl"
-                     style="background-color: #dbeafe; color: var(--color-primary)">
-                    <i class="fa-solid fa-list-check"></i> 
+            <div class="bg-white border-2 rounded-2xl p-5" style="border-color:var(--color-primary)">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                         style="background:var(--color-primary)">
+                        <i class="fa-solid fa-list-check text-white text-sm"></i>
+                    </div>
+                    <h3 class="font-bold" style="color:var(--color-primary)">MISI</h3>
                 </div>
-                <h3 class="text-lg font-bold " style="color: var(--color-primary)">MISI</h3>
-                <div class="text-gray-600 leading-relaxed text-sm flex-1 whitespace-pre-line">{{ $profil->misi ?? 'Belum diisi.' }}</div>
+                @if($profil && $profil->misi)
+                    @php $misiList = array_filter(explode("\n", $profil->misi)); @endphp
+                    @if(count($misiList) > 1)
+                        <ol class="space-y-2">
+                            @foreach($misiList as $i => $item)
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <span class="shrink-0 w-5 h-5 text-white rounded-full text-xs flex items-center justify-center font-bold mt-0.5"
+                                      style="background:var(--color-primary)">{{ $i + 1 }}</span>
+                                <span>{{ trim($item) }}</span>
+                            </li>
+                            @endforeach
+                        </ol>
+                    @else
+                        <p class="text-sm text-gray-600 leading-relaxed">{{ $profil->misi }}</p>
+                    @endif
+                @else
+                    <p class="text-gray-400 text-sm italic">Belum diisi.</p>
+                @endif
             </div>
         </div>
     </div>
@@ -161,7 +182,7 @@
 @endif
 
 {{-- GALERI HIGHLIGHT --}}
-<section class="py-16">
+<section class="py-16 ">
     <div class="container mx-auto max-w-7xl px-4">
         <div class="flex items-end justify-between mb-8">
             <h2 class="section-title">Galeri Foto</h2>
