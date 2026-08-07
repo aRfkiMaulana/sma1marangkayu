@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Galeri;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class GaleriController extends Controller
@@ -22,19 +25,36 @@ class GaleriController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'judul' => 'required|string|max:200',
             'file'  => 'required|image|max:4096',
             'album' => 'nullable|string|max:100',
         ]);
 
-        $data = $request->only(['judul', 'album', 'urutan', 'deskripsi']);
-        $data['tipe']         = 'foto';
-        $data['is_highlight'] = $request->boolean('is_highlight');
-        $data['file']         = $request->file('file')->store('galeri', 'public');
+        $data = $request->except(['_token', 'file', 'link']);
 
-        Galeri::create($data);
-        return redirect()->route('admin.galeri.index')->with('success', 'Foto berhasil ditambahkan.');
+        try {
+            DB::beginTransaction();
+
+            if ($request->tipe === 'foto' && $request->hasFile('file')) {
+                $data['file'] = ImageService::uploadWebp($request->file('file'), 'galeri');
+            } elseif ($request->tipe === 'video') {
+                $data['file'] = $request->link;
+            }
+
+            $galeri = Galeri::create($data);
+
+            ActivityLog::log('create', 'Galeri', "Menambahkan item galeri: {$galeri->judul}");
+
+            DB::commit();
+            return redirect()->route('admin.galeri.index')->with('success', 'Item galeri berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if (isset($data['file']) && $request->tipe === 'foto') {
+                Storage::disk('public')->delete($data['file']);
+            }
+            return back()->withInput()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function edit(Galeri $galeri)
@@ -44,32 +64,66 @@ class GaleriController extends Controller
 
     public function update(Request $request, Galeri $galeri)
     {
-        $request->validate([
+        $validated = $request->validate([
             'judul' => 'required|string|max:200',
             'file'  => 'nullable|image|max:4096',
             'album' => 'nullable|string|max:100',
         ]);
 
-        $data = $request->only(['judul', 'album', 'urutan', 'deskripsi']);
-        $data['is_highlight'] = $request->boolean('is_highlight');
+        $data = $request->except(['_token', '_method', 'file', 'link']);
+        $oldFile = $galeri->file;
+        $isOldFilePhoto = ($galeri->tipe === 'foto' && $oldFile);
 
-        if ($request->hasFile('file')) {
-            if ($galeri->file && $galeri->tipe === 'foto') {
-                Storage::disk('public')->delete($galeri->file);
+        try {
+            DB::beginTransaction();
+
+            if ($request->tipe === 'foto' && $request->hasFile('file')) {
+                $data['file'] = ImageService::uploadWebp($request->file('file'), 'galeri');
+            } elseif ($request->tipe === 'video' && $request->link) {
+                $data['file'] = $request->link;
             }
-            $data['file'] = $request->file('file')->store('galeri', 'public');
-        }
 
-        $galeri->update($data);
-        return redirect()->route('admin.galeri.index')->with('success', 'Foto berhasil diperbarui.');
+            $galeri->update($data);
+
+            if ($isOldFilePhoto && $request->hasFile('file')) {
+                Storage::disk('public')->delete($oldFile);
+            }
+
+            ActivityLog::log('update', 'Galeri', "Mengubah item galeri: {$galeri->judul}");
+
+            DB::commit();
+            return redirect()->route('admin.galeri.index')->with('success', 'Item galeri berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if (isset($data['file']) && $request->tipe === 'foto' && $request->hasFile('file')) {
+                Storage::disk('public')->delete($data['file']);
+            }
+            return back()->withInput()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function destroy(Galeri $galeri)
     {
-        if ($galeri->file && $galeri->tipe === 'foto') {
-            Storage::disk('public')->delete($galeri->file);
+        try {
+            DB::beginTransaction();
+
+            $judul = $galeri->judul;
+            $file = $galeri->file;
+            $isPhoto = ($galeri->tipe === 'foto');
+
+            $galeri->delete();
+
+            if ($isPhoto && $file) {
+                Storage::disk('public')->delete($file);
+            }
+
+            ActivityLog::log('delete', 'Galeri', "Menghapus item galeri: {$judul}");
+
+            DB::commit();
+            return redirect()->route('admin.galeri.index')->with('success', 'Item galeri berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-        $galeri->delete();
-        return redirect()->route('admin.galeri.index')->with('success', 'Foto berhasil dihapus.');
     }
 }

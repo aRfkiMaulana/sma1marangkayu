@@ -75,6 +75,20 @@
                 @endif
             </a>
 
+            <p class="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-widest text-white/35">Buku Tahunan</p>
+            <a href="{{ route('admin.angkatan.index') }}"
+               class="sidebar-link {{ request()->routeIs('admin.angkatan.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-graduation-cap w-5 text-center"></i> Kelola Angkatan
+            </a>
+            <a href="{{ route('admin.siswa.index') }}"
+               class="sidebar-link {{ request()->routeIs('admin.siswa.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-address-card w-5 text-center"></i> Data Siswa & Approval
+                @php $pendingSiswa = \App\Models\Siswa::where('status', 'pending')->count(); @endphp
+                @if($pendingSiswa > 0)
+                <span class="ml-auto text-xs font-bold bg-amber-500 text-white px-1.5 py-0.5 rounded-full">{{ $pendingSiswa }}</span>
+                @endif
+            </a>
+
             <p class="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-widest text-white/35">Akademik</p>
             <a href="{{ route('admin.ekstrakurikuler.index') }}"
                class="sidebar-link {{ request()->routeIs('admin.ekstrakurikuler.*') ? 'active' : '' }}">
@@ -89,6 +103,18 @@
             <a href="{{ route('admin.profil.edit') }}"
                class="sidebar-link {{ request()->routeIs('admin.profil.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-gear w-5 text-center"></i> Profil Sekolah
+            </a>
+            <a href="{{ route('admin.setting-bobot.index') }}"
+               class="sidebar-link {{ request()->routeIs('admin.setting-bobot.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-sliders w-5 text-center"></i> Bobot Poin Prestasi
+            </a>
+            <a href="{{ route('admin.users.index') }}"
+               class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-users-gear w-5 text-center"></i> Pengelola CMS
+            </a>
+            <a href="{{ route('admin.logs.index') }}"
+               class="sidebar-link {{ request()->routeIs('admin.logs.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Log Aktivitas
             </a>
             <a href="{{ route('home') }}" target="_blank" class="sidebar-link">
                 <i class="fa-solid fa-arrow-up-right-from-square w-5 text-center"></i> Lihat Website

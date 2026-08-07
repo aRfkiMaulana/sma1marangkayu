@@ -9,6 +9,7 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfilSekolahController;
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\BeritaController as AdminBeritaController;
 use App\Http\Controllers\Admin\GaleriController as AdminGaleriController;
 use App\Http\Controllers\Admin\GuruStafController;
@@ -17,6 +18,12 @@ use App\Http\Controllers\Admin\FasilitasController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\EkstrakurikulerController;
 use App\Http\Controllers\Admin\PrestasiController;
+use App\Http\Controllers\Admin\SettingBobotController;
+use App\Http\Controllers\Admin\AngkatanController as AdminAngkatanController;
+use App\Http\Controllers\Admin\KelasController as AdminKelasController;
+use App\Http\Controllers\Admin\SiswaController as AdminSiswaController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\SiswaPublicController;
 
 // ─── PUBLIC ROUTES ───────────────────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -55,24 +62,33 @@ Route::prefix('galeri')->name('galeri.')->group(function () {
 
 // Kontak
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
-Route::post('/kontak/kirim', [KontakController::class, 'kirim'])->name('kontak.kirim');
+Route::post('/kontak/kirim', [KontakController::class, 'kirim'])->middleware('throttle:5,1')->name('kontak.kirim');
+
+// Buku Tahunan Publik (Tanpa Auth)
+Route::get('/buku-tahunan', [SiswaPublicController::class, 'bukuTahunan'])->name('buku-tahunan.index');
+Route::post('/buku-tahunan/verifikasi', [SiswaPublicController::class, 'verifikasi'])->name('buku-tahunan.verifikasi');
+Route::post('/buku-tahunan/simpan-draft', [SiswaPublicController::class, 'simpanDraft'])->name('buku-tahunan.simpan-draft');
+Route::post('/buku-tahunan/kirim-ke-admin', [SiswaPublicController::class, 'kirimKeAdmin'])->name('buku-tahunan.kirim-ke-admin');
+Route::get('/buku-tahunan/cek-status', [SiswaPublicController::class, 'cekStatus'])->name('buku-tahunan.cek-status');
 
 // ─── AUTH ROUTES ─────────────────────────────────────────────────────────────
 require __DIR__ . '/auth.php';
 
-// ─── ADMIN ROUTES ────────────────────────────────────────────────────────────
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+// ─── DASHBOARD REDIRECT ALIAS ───────────────────────────────────────────────
+Route::get('/dashboard', function () {
+    return redirect()->route('admin.dashboard');
+})->middleware(['auth', 'admin'])->name('dashboard');
+// ─── ADMIN / PANEL ROUTES (CUSTOM SECURE PATH) ───────────────────────────────
+Route::prefix('panel-smansa')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/overview', [DashboardController::class, 'index'])->name('dashboard');
 
     // Profil Sekolah
     Route::get('/profil', [ProfilSekolahController::class, 'edit'])->name('profil.edit');
     Route::put('/profil', [ProfilSekolahController::class, 'update'])->name('profil.update');
 
     // Berita
-    Route::resource('berita', AdminBeritaController::class)
-        ->except(['show'])
-        ->parameters(['berita' => 'berita']);
+    Route::resource('berita', AdminBeritaController::class)->except(['show'])->parameters(['berita' => 'berita']);
 
     // Galeri
     Route::resource('galeri', AdminGaleriController::class)->except(['show']);
@@ -81,7 +97,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('guru-staf', GuruStafController::class)->except(['show']);
 
     // Fasilitas
-    Route::resource('fasilitas', FasilitasController::class)->except(['show']);
+    Route::resource('fasilitas', FasilitasController::class)->except(['show'])->parameters(['fasilitas' => 'fasilitas']);
 
     // Slider
     Route::resource('slider', SliderController::class)->except(['show']);
@@ -96,4 +112,33 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');
     Route::get('/pesan/{pesan}', [PesanController::class, 'show'])->name('pesan.show');
     Route::delete('/pesan/{pesan}', [PesanController::class, 'destroy'])->name('pesan.destroy');
+
+    // User Management
+    Route::resource('users', AdminUserController::class)->except(['show']);
+
+    // Setting Bobot
+    Route::get('/setting-bobot', [SettingBobotController::class, 'index'])->name('setting-bobot.index');
+    Route::put('/setting-bobot', [SettingBobotController::class, 'update'])->name('setting-bobot.update');
+
+    // Log Aktivitas / Audit Trail
+    Route::get('/logs', [ActivityLogController::class, 'index'])->name('logs.index');
+
+    // Buku Tahunan CMS (Admin)
+    Route::get('/admin/angkatan', [AdminAngkatanController::class, 'index'])->name('angkatan.index');
+    Route::post('/admin/angkatan', [AdminAngkatanController::class, 'store'])->name('angkatan.store');
+    Route::put('/admin/angkatan/{angkatan}', [AdminAngkatanController::class, 'update'])->name('angkatan.update');
+    Route::delete('/admin/angkatan/{angkatan}', [AdminAngkatanController::class, 'destroy'])->name('angkatan.destroy');
+
+    Route::get('/admin/kelas', [AdminKelasController::class, 'index'])->name('kelas.index');
+    Route::post('/admin/kelas', [AdminKelasController::class, 'store'])->name('kelas.store');
+    Route::put('/admin/kelas/{kela}', [AdminKelasController::class, 'update'])->name('kelas.update');
+    Route::delete('/admin/kelas/{kela}', [AdminKelasController::class, 'destroy'])->name('kelas.destroy');
+
+    Route::get('/admin/siswa', [AdminSiswaController::class, 'index'])->name('siswa.index');
+    Route::post('/admin/siswa/import', [AdminSiswaController::class, 'importExcel'])->name('siswa.import');
+    Route::get('/admin/siswa/export-kode', [AdminSiswaController::class, 'exportKode'])->name('siswa.export-kode');
+    Route::put('/admin/siswa/{siswa}/approve', [AdminSiswaController::class, 'approve'])->name('siswa.approve');
+    Route::put('/admin/siswa/{siswa}/reject', [AdminSiswaController::class, 'reject'])->name('siswa.reject');
+    Route::post('/admin/siswa/bulk-approve', [AdminSiswaController::class, 'bulkApprove'])->name('siswa.bulk-approve');
+    Route::delete('/admin/siswa/{siswa}', [AdminSiswaController::class, 'destroy'])->name('siswa.destroy');
 });

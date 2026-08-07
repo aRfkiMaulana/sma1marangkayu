@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Pesan;
 
 class PesanController extends Controller
@@ -21,7 +22,9 @@ class PesanController extends Controller
 
     public function destroy(Pesan $pesan)
     {
+        $subjek = $pesan->subjek;
         $pesan->delete();
+        ActivityLog::log('delete', 'Pesan', "Menghapus pesan masuk: {$subjek}");
         return redirect()->route('admin.pesan.index')->with('success', 'Pesan berhasil dihapus.');
     }
 }

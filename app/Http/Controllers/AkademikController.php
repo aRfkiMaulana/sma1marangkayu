@@ -17,15 +17,8 @@ class AkademikController extends Controller
     {
         $ekskul = Ekstrakurikuler::with(['personel', 'prestasi'])->where('is_aktif', true)->get();
 
-        // Bobot poin per tingkat prestasi
-        $bobot = [
-            'internasional' => 100,
-            'nasional'      => 75,
-            'provinsi'      => 50,
-            'kabupaten'     => 30,
-            'kecamatan'     => 20,
-            'sekolah'       => 10,
-        ];
+        // Bobot poin per tingkat prestasi dari Database
+        $bobot = \App\Models\SettingBobotPrestasi::getBobotArray();
 
         // Hitung skor tiap ekskul dan beri properti sementara
         $ekskul->each(function ($e) use ($bobot) {

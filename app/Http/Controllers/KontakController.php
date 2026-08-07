@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pesan;
 use App\Models\ProfilSekolah;
+use App\Rules\Turnstile;
 use Illuminate\Http\Request;
 
 class KontakController extends Controller

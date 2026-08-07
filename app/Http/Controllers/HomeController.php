@@ -13,9 +13,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $profil  = ProfilSekolah::first();
+        $profil  = ProfilSekolah::first() ?? new ProfilSekolah();
         $sliders = Slider::where('is_aktif', true)->orderBy('urutan')->get();
-        $berita  = Berita::published()->latest('tanggal_publish')->take(6)->get();
+        $berita  = Berita::published()->with(['kategori', 'penulis'])->latest('tanggal_publish')->take(6)->get();
         $galeri  = Galeri::where('is_highlight', true)->orderBy('urutan')->take(8)->get();
         $prestasi = Prestasi::latest()->take(4)->get();
 
