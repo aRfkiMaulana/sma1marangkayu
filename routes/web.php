@@ -70,7 +70,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::put('/profil', [ProfilSekolahController::class, 'update'])->name('profil.update');
 
     // Berita
-    Route::resource('berita', AdminBeritaController::class)->except(['show']);
+    Route::resource('berita', AdminBeritaController::class)
+        ->except(['show'])
+        ->parameters(['berita' => 'berita']);
 
     // Galeri
     Route::resource('galeri', AdminGaleriController::class)->except(['show']);

@@ -56,13 +56,13 @@
 
     /* ── SECTION TITLE ── */
     .section-title {
-        @apply text-3xl font-bold pb-3 relative inline-block;
+        @apply text-3xl font-bold relative inline-block;
         color: var(--color-primary);
     }
 
     /* ── CARD ── */
     .card-hover {
-        @apply bg-white rounded-2xl shadow-sm overflow-hidden
+        @apply bg-white rounded-2xl border border-slate-300 overflow-hidden
                transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
     }
 

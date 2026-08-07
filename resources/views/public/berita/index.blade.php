@@ -7,7 +7,7 @@
         <div class="grid lg:grid-cols-3 gap-8">
             {{-- DAFTAR BERITA --}}
             <div class="lg:col-span-2">
-                <h2 class="section-title">Berita &amp; Kegiatan</h2>
+                <h2 class="section-title flex items-center gap-3"> <x-icons.index name="ufo" width="60px" height="60px" /> Berita &amp; Kegiatan</h2>
                 <div class="grid sm:grid-cols-2 gap-6">
                     @forelse($berita as $b)
                     <article class="card-hover flex flex-col group relative">
@@ -43,7 +43,7 @@
             </div>
 
             {{-- SIDEBAR --}}
-            <aside class="space-y-6 mt-5">
+            <aside class="space-y-6 mt-18 sticky top-24 self-start">
                 <div class="rounded-xl overflow-hidden border border-slate-300">
                     <div class="px-4 py-3 text-sm font-bold text-white" style="background-color: var(--color-primary)">Kategori</div>
                     <ul class="divide-y divide-slate-100">
@@ -62,7 +62,7 @@
                 <div class="rounded-xl overflow-hidden  border border-slate-300">
                     <div class="px-4 py-3 text-sm font-bold text-white" style="background-color: var(--color-primary)">Berita Terkini</div>
                     <ul class="divide-y divide-slate-100">
-                        @foreach($terkini as $t)
+                        @foreach($terkini->take(3) as $t)
                         <li>
                             <a href="{{ route('berita.show', $t->slug) }}" class="flex gap-3 px-4 py-3 hover:bg-blue-50 transition-colors group">
                                 <img src="{{ $t->thumbnail ? Storage::url($t->thumbnail) : 'https://placehold.co/60x50/1a3d6e/fff?text=B' }}"

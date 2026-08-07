@@ -78,10 +78,51 @@
     </div>
 </section>
 
-{{-- BERITA TERBARU --}}
-<section class="py-16">
+{{-- CHART STATISTIK --}}
+@if($ekskulChart->isNotEmpty() || $beritaGaleriChart->sum() > 0)
+<section class="py-10 bg-white">
     <div class="container mx-auto max-w-7xl px-4">
-        <div class="flex items-end justify-between mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {{-- Chart Kiri: Peringkat Ekskul (Doughnut) --}}
+            <div class="bg-slate-50 rounded-2xl p-6 border border-gray-200">
+                <h3 class="text-base font-semibold text-gray-700 mb-1">Peringkat Ekstrakurikuler</h3>
+                <p class="text-xs text-gray-400 mb-4">Top ekskul berdasarkan total poin prestasi</p>
+                <div class="relative" style="height:220px;">
+                    @if($ekskulChart->isNotEmpty())
+                        <canvas id="chartEkskulRanking" role="img" aria-label="Chart peringkat ekstrakurikuler"></canvas>
+                    @else
+                        <div class="h-full flex items-center justify-center text-sm text-gray-400 border border-dashed border-gray-200 rounded-xl">
+                            Belum ada data prestasi ekstrakurikuler
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Chart Kanan: Berita & Galeri (Bar) --}}
+            <div class="bg-slate-50 rounded-2xl p-6 border border-gray-200">
+                <h3 class="text-base font-semibold text-gray-700 mb-1">Konten Website</h3>
+                <p class="text-xs text-gray-400 mb-4">Jumlah konten publik yang tersedia di website</p>
+                <div class="relative" style="height:220px;">
+                    @if($beritaGaleriChart->sum() > 0)
+                        <canvas id="chartBeritaGaleri" role="img" aria-label="Chart berita dan galeri"></canvas>
+                    @else
+                        <div class="h-full flex items-center justify-center text-sm text-gray-400 border border-dashed border-gray-200 rounded-xl">
+                            Belum ada data konten
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- BERITA TERBARU --}}
+<section class="py-16 bg-slate-50">
+    <div class="container mx-auto max-w-7xl px-4">
+        <div class="flex items-end justify-between mb-8">
             <h2 class="section-title">Berita &amp; Pengumuman</h2>
             <a href="{{ route('berita.index') }}" class="btn-outline text-sm py-2 px-4">
                 Lihat Semua
@@ -135,7 +176,7 @@
 
 {{-- VISI MISI --}}
 @if($profil && ($profil->visi || $profil->misi))
-<section class="py-16 bg-slate-50">
+<section class="py-16">
     <div class="container mx-auto max-w-7xl px-4">
         <div class="grid md:grid-cols-2 gap-8 items-stretch">
             <div class="rounded-2xl p-8 text-white flex flex-col"
@@ -181,6 +222,35 @@
 </section>
 @endif
 
+{{-- LOKASI SEKOLAH --}}
+<section class="py-16 bg-slate-50">
+    <div class="container mx-auto max-w-7xl px-4">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <h2 class="section-title">Lokasi Sekolah</h2>
+            </div>
+            <a href="https://maps.google.com/?q=-0.127222,117.427667"
+               target="_blank" rel="noopener noreferrer"
+               class="btn-outline text-sm py-2 px-4 shrink-0">
+               Buka Maps
+            </a>
+        </div>
+
+        <div class="rounded-2xl overflow-hidden border-2 border-gray-300" style="height:300px;">
+            <iframe
+                title="Lokasi SMA Negeri 1 Marangkayu"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=-0.127222,117.427667&z=16&output=embed">
+            </iframe>
+        </div>
+    </div>
+</section>
+
 {{-- GALERI HIGHLIGHT --}}
 <section class="py-16 ">
     <div class="container mx-auto max-w-7xl px-4">
@@ -216,7 +286,17 @@
     </div>
 </section>
 
+
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+    window.__homeCharts = {
+        ekskul:       @json($ekskulChart),
+        beritaGaleri: @json($beritaGaleriChart),
+    };
+</script>
+<script src="{{ asset('js/home-charts.js') }}"></script>
+
 <script>
 function slider() {
     return {
