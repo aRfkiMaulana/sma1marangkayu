@@ -110,10 +110,10 @@ class SiswaPublicController extends Controller
                 $folderPath = "buku-tahunan/{$tahunLulus}/{$namaKelas}";
 
                 $file = $request->file('foto');
-                $filename = "{$siswa->nisn}_" . time() . ".jpg";
+                $filename = "{$siswa->nisn}_" . time() . ".webp";
                 $fullPath = "{$folderPath}/{$filename}";
 
-                $img = Image::read($file->getRealPath())->cover(300, 400)->toJpeg(85);
+                $img = Image::read($file->getRealPath())->cover(300, 400)->encodeByExtension('webp', quality: 85);
                 Storage::disk('public')->put($fullPath, (string) $img);
 
                 $data['foto'] = $fullPath;
