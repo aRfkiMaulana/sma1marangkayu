@@ -5,11 +5,10 @@ namespace App\Imports;
 use App\Models\Siswa;
 use App\Services\SiswaService;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Http\UploadedFile;
 
-class SiswasImport implements ToCollection, WithHeadingRow
+class SiswasImport
 {
     protected int $kelasId;
     protected int $tahunLulus;
@@ -19,17 +18,29 @@ class SiswasImport implements ToCollection, WithHeadingRow
 
     public function __construct(int $kelasId, int $tahunLulus, ?Carbon $dibukaAt)
     {
-        $this->kelasId = $kelasId;
+        $this->kelasId    = $kelasId;
         $this->tahunLulus = $tahunLulus;
-        $this->dibukaAt = $dibukaAt;
+        $this->dibukaAt   = $dibukaAt;
     }
 
-    public function collection(Collection $rows)
+    public function import(UploadedFile $file): void
     {
-        foreach ($rows as $index => $row) {
-            $rowNum = $index + 2; // header line offset
-            $nisn = trim((string) ($row['nisn'] ?? ''));
-            $nama = trim((string) ($row['nama'] ?? ''));
+        $spreadsheet = IOFactory::load($file->getRealPath());
+        $sheet       = $spreadsheet->getActiveSheet();
+        $rows        = $sheet->toArray(null, true, true, false);
+
+        // Baris pertama adalah header, ambil key dari baris 1
+        $header = array_map(
+            fn($h) => strtolower(trim((string) $h)),
+            $rows[0] ?? []
+        );
+
+        foreach (array_slice($rows, 1) as $index => $row) {
+            $rowNum = $index + 2;
+            $data   = array_combine($header, $row);
+
+            $nisn = trim((string) ($data['nisn'] ?? ''));
+            $nama = trim((string) ($data['nama'] ?? ''));
 
             if (!preg_match('/^\d{10}$/', $nisn)) {
                 $this->failures[] = "Baris #{$rowNum}: NISN ('{$nisn}') harus 10 digit angka.";
@@ -42,11 +53,13 @@ class SiswasImport implements ToCollection, WithHeadingRow
             }
 
             if (Siswa::where('nisn', $nisn)->exists()) {
-                $this->failures[] = "Baris #{$rowNum}: NISN ('{$nisn}') sudah terdaftar di sistem.";
+                $this->failures[] = "Baris #{$rowNum}: NISN ('{$nisn}') sudah terdaftar.";
                 continue;
             }
 
-            $kodeExpiredAt = $this->dibukaAt ? (clone $this->dibukaAt)->addDays(7) : now()->addDays(7);
+            $kodeExpiredAt = $this->dibukaAt
+                ? (clone $this->dibukaAt)->addDays(7)
+                : now()->addDays(7);
 
             Siswa::create([
                 'kelas_id'        => $this->kelasId,

@@ -50,8 +50,7 @@
         color: var(--color-primary);
     }
     .btn-outline:hover {
-        background-color: var(--color-primary);
-        @apply text-white;
+        background-color: #c3e0ffc7;
     }
 
     /* ── SECTION TITLE ── */

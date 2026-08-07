@@ -9,7 +9,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaService
 {
@@ -31,7 +30,7 @@ class SiswaService
 
         try {
             DB::beginTransaction();
-            Excel::import($import, $file);
+            $import->import($file);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

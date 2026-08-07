@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Website Resmi SMA Negeri 1 Marangkayu - Kutai Kartanegara, Kalimantan Timur">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'SMA Negeri 1 Marangkayu')</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -86,8 +87,12 @@
                         <a href="{{ route('akademik.kalender') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Kalender Akademik</a>
                         <a href="{{ route('akademik.prestasi') }}" class="block px-4 py-2.5 text-lg text-gray-600 font-medium" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Prestasi</a>
                     </div>
-                </div>
-
+                </div>    
+                <a href="{{ route('buku-tahunan.index') }}"
+                   class="px-3 py-2 rounded-md transition-colors {{ request()->routeIs('buku-tahunan.*') ? '' : 'text-gray-600 hover:text-gray-900' }}"
+                   style="{{ request()->routeIs('buku-tahunan.*') ? 'color:var(--color-primary)' : '' }}">
+                    Buku Tahunan
+                </a>
                 <a href="{{ route('berita.index') }}"
                    class="px-3 py-2 rounded-md transition-colors {{ request()->routeIs('berita.*') ? '' : 'text-gray-600 hover:text-gray-900' }}"
                    style="{{ request()->routeIs('berita.*') ? 'color:var(--color-primary)' : '' }}">
@@ -171,7 +176,11 @@
                     <a href="{{ route('akademik.prestasi') }}" class="flex items-center pl-9 pr-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">Prestasi</a>
                 </div>
             </div>
-
+            <a href="{{ route('buku-tahunan.index') }}"
+               class="flex items-center px-5 py-3.5 text-sm font-semibold {{ request()->routeIs('buku-tahunan.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50' }}"
+               style="{{ request()->routeIs('buku-tahunan.*') ? 'color:var(--color-primary)' : '' }}">
+                Buku Tahunan
+            </a>
             <a href="{{ route('berita.index') }}"
                class="flex items-center px-5 py-3.5 text-sm font-semibold {{ request()->routeIs('berita.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50' }}"
                style="{{ request()->routeIs('berita.*') ? 'color:var(--color-primary)' : '' }}">
@@ -270,7 +279,7 @@
                     <li><a href="{{ route('berita.index') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Berita &amp; Kegiatan</a></li>
                     <li><a href="{{ route('galeri.index') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Galeri Foto</a></li>
                     <li><a href="{{ route('kontak') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Kontak Kami</a></li>
-                    <li><a href="https://kemdikbud.go.id" target="_blank" rel="noopener noreferrer" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Kemdikbud</a></li>
+                    <li><a href="{{ route('buku-tahunan.index') }}" class="transition-colors" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color=''">Buku Tahunan</a></li>
                 </ul>
             </div>
 
