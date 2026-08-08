@@ -26,7 +26,7 @@ class SiswaService
         $kelas = Kelas::with('angkatan')->findOrFail($kelasId);
         $angkatan = $kelas->angkatan;
 
-        $import = new SiswasImport($kelasId, $angkatan->tahun_lulus, $angkatan->dibuka_at);
+        $import = new SiswasImport($kelasId, (int) $angkatan->tahun_lulus, $angkatan->dibuka_at);
 
         try {
             DB::beginTransaction();

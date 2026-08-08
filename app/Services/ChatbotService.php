@@ -399,7 +399,7 @@ final class ChatbotService
     private function handleKepsek(): array
     {
         $profil = ProfilSekolah::first();
-        $nama   = $profil?->kepala_sekolah ?? 'Drs. H. Sarjono, M.Pd';
+        $nama   = $profil ? $profil->kepala_sekolah : 'Drs. H. Sarjono, M.Pd';
 
         return [
             'message'     => "👨‍🏫 **Kepala SMAN 1 Marangkayu**\n\n**{$nama}**\n\n"
@@ -501,13 +501,20 @@ final class ChatbotService
         $p = ProfilSekolah::first();
         $s = self::SEKOLAH;
 
+        $npsn       = $p ? $p->npsn : $s['npsn'];
+        $akreditasi = $p ? $p->akreditasi : $s['akreditasi'];
+        $alamat     = $p ? $p->alamat : $s['alamat'];
+        $visi       = $p ? $p->visi : $s['visi'];
+        $telepon    = $p ? $p->telepon : $s['phone'];
+        $email      = $p ? $p->email : $s['email'];
+
         $msg  = "🏫 **Profil {$s['nama']}**\n"
               . "🏷️ _{$s['tagline']}_\n\n"
-              . "📌 **NPSN**: " . ($p?->npsn ?? $s['npsn']) . " | Akreditasi: **" . ($p?->akreditasi ?? $s['akreditasi']) . "**\n"
-              . "📍 **Alamat**: " . ($p?->alamat ?? $s['alamat']) . "\n\n"
-              . "🎯 **Visi**:\n\"" . ($p?->visi ?? $s['visi']) . "\"\n\n"
-              . "📞 **Telepon/WA**: " . ($p?->telepon ?? $s['phone']) . "\n"
-              . "✉️ **Email**: " . ($p?->email ?? $s['email']);
+              . "📌 **NPSN**: " . $npsn . " | Akreditasi: **" . $akreditasi . "**\n"
+              . "📍 **Alamat**: " . $alamat . "\n\n"
+              . "🎯 **Visi**:\n\"" . $visi . "\"\n\n"
+              . "📞 **Telepon/WA**: " . $telepon . "\n"
+              . "✉️ **Email**: " . $email;
 
         return [
             'message'     => $msg,

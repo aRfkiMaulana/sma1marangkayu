@@ -4,6 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $nisn
+ * @property string $nama
+ * @property string|null $kode_unik
+ * @property \Illuminate\Support\Carbon|null $kode_expired_at
+ * @property string|null $foto
+ * @property string|null $moto
+ * @property string $status
+ * @property int|null $kelas_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Kelas|null $kelas
+ * @property-read \App\Models\Angkatan|null $angkatan
+ */
 class Siswa extends Model
 {
     protected $table = 'siswas';
@@ -23,6 +38,9 @@ class Siswa extends Model
         'kode_expired_at' => 'datetime',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Kelas, $this>
+     */
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'kelas_id');

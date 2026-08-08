@@ -62,6 +62,10 @@
             </a>
 
             <p class="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-widest text-white/35">Data Sekolah</p>
+            <a href="{{ route('admin.profil.edit') }}"
+               class="sidebar-link {{ request()->routeIs('admin.profil.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-school w-5 text-center"></i> Profil Sekolah
+            </a>
             <a href="{{ route('admin.guru-staf.index') }}"
                class="sidebar-link {{ request()->routeIs('admin.guru-staf.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-chalkboard-user w-5 text-center"></i> Guru &amp; Staf
@@ -108,10 +112,6 @@
             </a>
 
             <p class="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-widest text-white/35">Pengaturan</p>
-            <a href="{{ route('admin.profil.edit') }}"
-               class="sidebar-link {{ request()->routeIs('admin.profil.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-gear w-5 text-center"></i> Profil Sekolah
-            </a>
             <a href="{{ route('admin.setting-bobot.index') }}"
                class="sidebar-link {{ request()->routeIs('admin.setting-bobot.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-sliders w-5 text-center"></i> Bobot Poin Prestasi

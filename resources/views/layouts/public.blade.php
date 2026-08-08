@@ -227,26 +227,33 @@
                 </div>
                 {{-- Social icons --}}
                 <div class="flex gap-3">
-                    <a href="#" target="_blank" rel="noopener noreferrer" title="Facebook"
+                    @if(!empty($profilSekolahGlobal->facebook))
+                    <a href="{{ $profilSekolahGlobal->getFormattedUrl('facebook') }}" target="_blank" rel="noopener noreferrer" title="Facebook"
                        class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm"
                        style="background:#1877F2">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" title="Instagram"
+                    @endif
+                    @if(!empty($profilSekolahGlobal->instagram))
+                    <a href="{{ $profilSekolahGlobal->getFormattedUrl('instagram') }}" target="_blank" rel="noopener noreferrer" title="Instagram"
                        class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm"
                        style="background:linear-gradient(45deg,#833AB4,#C13584,#E1306C,#FD1D1D,#FCAF45)">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" title="YouTube"
+                    @endif
+                    @if(!empty($profilSekolahGlobal->youtube))
+                    <a href="{{ $profilSekolahGlobal->getFormattedUrl('youtube') }}" target="_blank" rel="noopener noreferrer" title="YouTube"
                        class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm"
                        style="background:#FF0000">
                         <i class="fa-brands fa-youtube"></i>
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" title="TikTok"
-                       class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm"
-                       style="background:#010101">
-                        <i class="fa-brands fa-tiktok"></i>
+                    @endif
+                    @if(!empty($profilSekolahGlobal->whatsapp))
+                    <a href="https://wa.me/{{ preg_replace('/\D/', '', $profilSekolahGlobal->whatsapp) }}" target="_blank" rel="noopener noreferrer" title="WhatsApp"
+                       class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:opacity-90 hover:scale-110 transition-all text-sm bg-green-500">
+                        <i class="fa-brands fa-whatsapp"></i>
                     </a>
+                    @endif
                 </div>
             </div>
 

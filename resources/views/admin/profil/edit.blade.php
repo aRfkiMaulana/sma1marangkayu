@@ -90,8 +90,8 @@
                             <input type="file" name="logo" class="form-input" accept="image/*">
                         </div>
                         <div>
-                            <label class="form-label">Foto Sekolah</label>
-                            @if($profil->foto_sekolah)<img src="{{ Storage::url($profil->foto_sekolah) }}" class="h-16 rounded-lg mb-2 object-cover" alt="Foto">@endif
+                            <label class="form-label">Foto Kepala Sekolah</label>
+                            @if($profil->foto_sekolah)<img src="{{ Storage::url($profil->foto_sekolah) }}" class="h-16 rounded-lg mb-2 object-cover" alt="Foto Kepala Sekolah">@endif
                             <input type="file" name="foto_sekolah" class="form-input" accept="image/*">
                         </div>
                     </div>

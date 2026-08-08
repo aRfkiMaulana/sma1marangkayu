@@ -44,8 +44,9 @@ class ProfilSekolahController extends Controller
         $profil = ProfilSekolah::firstOrNew([]);
         $data   = $request->only([
             'nama_sekolah', 'npsn', 'akreditasi', 'kepala_sekolah', 'visi', 'misi',
-            'sejarah', 'alamat', 'kecamatan', 'kabupaten', 'provinsi', 'telepon',
-            'email', 'jumlah_siswa', 'jumlah_guru', 'jumlah_staf', 'tahun_berdiri', 'maps_embed'
+            'sejarah', 'alamat', 'kecamatan', 'kabupaten', 'provinsi', 'kode_pos', 'telepon', 'whatsapp',
+            'email', 'website', 'facebook', 'instagram', 'youtube',
+            'jumlah_siswa', 'jumlah_guru', 'jumlah_staf', 'tahun_berdiri', 'maps_embed'
         ]);
 
         if ($request->hasFile('logo')) {

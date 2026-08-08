@@ -62,6 +62,26 @@
                             <a href="mailto:{{ $profil->email }}" class="transition-colors" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color=''">{{ $profil->email }}</a>
                         </div>
                         @endif
+                        @if($profil && ($profil->facebook || $profil->instagram || $profil->youtube))
+                        <div class="pt-2 flex items-center gap-2">
+                            <span class="text-xs font-semibold text-slate-500 mr-1">Medsos:</span>
+                            @if($profil->facebook)
+                            <a href="{{ $profil->getFormattedUrl('facebook') }}" target="_blank" class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs hover:opacity-90">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            @endif
+                            @if($profil->instagram)
+                            <a href="{{ $profil->getFormattedUrl('instagram') }}" target="_blank" class="w-7 h-7 rounded-full text-white flex items-center justify-center text-xs hover:opacity-90" style="background:linear-gradient(45deg,#833AB4,#C13584,#E1306C,#FD1D1D,#FCAF45)">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            @endif
+                            @if($profil->youtube)
+                            <a href="{{ $profil->getFormattedUrl('youtube') }}" target="_blank" class="w-7 h-7 rounded-full bg-red-600 text-white flex items-center justify-center text-xs hover:opacity-90">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                            @endif
+                        </div>
+                        @endif
                         @if($profil && $profil->whatsapp)
                         <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $profil->whatsapp) }}"
                            target="_blank"
