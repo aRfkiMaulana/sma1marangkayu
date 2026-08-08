@@ -5,6 +5,10 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property int|null $kelas_count
+ * @mixin \App\Models\Angkatan
+ */
 class AngkatanResource extends JsonResource
 {
     public function toArray(Request $request): array
