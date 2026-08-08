@@ -329,7 +329,7 @@ final class ChatbotService
                     'approved' => 'Approved (Disetujui & Tampil di Buku Tahunan)',
                     'rejected' => 'Rejected (Ditolak Admin, Silakan Submit Ulang)',
                 ];
-                $statusTxt = $statusMap[$siswa->status];
+                $statusTxt = $statusMap[$siswa->status] ?? $siswa->status;
 
                 return [
                     'message'     => "👤 **Data Siswa Found**\nNama: **{$siswa->nama}**\nNISN: {$siswa->nisn}\nStatus: **{$statusTxt}**",
@@ -380,7 +380,7 @@ final class ChatbotService
                     'approved' => 'Approved (Disetujui & Tampil di Buku Tahunan)',
                     'rejected' => 'Rejected (Ditolak Admin, Silakan Submit Ulang)',
                 ];
-                $statusTxt = $statusMap[$siswa->status];
+                $statusTxt = $statusMap[$siswa->status] ?? $siswa->status;
 
                 return [
                     'message'     => "👤 **Data Siswa Found**\nNama: **{$siswa->nama}**\nNISN: {$siswa->nisn}\nStatus: **{$statusTxt}**",

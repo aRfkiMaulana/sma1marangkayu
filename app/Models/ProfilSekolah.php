@@ -17,4 +17,13 @@ class ProfilSekolah extends Model
         'logo', 'foto_sekolah', 'maps_embed',
         'jumlah_siswa', 'jumlah_guru', 'jumlah_staf', 'tahun_berdiri',
     ];
+
+    public function getFormattedUrl(string $field): ?string
+    {
+        $url = $this->{$field};
+        if (!$url) return null;
+        return str_starts_with($url, 'http://') || str_starts_with($url, 'https://')
+            ? $url
+            : 'https://' . $url;
+    }
 }
