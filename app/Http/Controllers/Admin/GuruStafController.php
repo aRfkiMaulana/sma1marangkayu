@@ -65,7 +65,7 @@ class GuruStafController extends Controller
             if ($guruStaf->foto) {
                 Storage::disk('public')->delete($guruStaf->foto);
             }
-            $data['foto'] = $request->file('foto')->store('guru-staf', 'public');
+            $data['foto'] = ImageService::uploadWebp($request->file('foto'), 'guru-staf');
         }
 
         $guruStaf->update($data);

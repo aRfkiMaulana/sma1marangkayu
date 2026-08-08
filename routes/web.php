@@ -71,6 +71,9 @@ Route::post('/buku-tahunan/simpan-draft', [SiswaPublicController::class, 'simpan
 Route::post('/buku-tahunan/kirim-ke-admin', [SiswaPublicController::class, 'kirimKeAdmin'])->name('buku-tahunan.kirim-ke-admin');
 Route::get('/buku-tahunan/cek-status', [SiswaPublicController::class, 'cekStatus'])->name('buku-tahunan.cek-status');
 
+// Chatbot API
+Route::post('/chatbot/send', [\App\Http\Controllers\ChatbotController::class, 'chat'])->middleware('throttle:30,1')->name('chatbot.send');
+
 // ─── AUTH ROUTES ─────────────────────────────────────────────────────────────
 require __DIR__ . '/auth.php';
 
@@ -107,6 +110,14 @@ Route::prefix('panel-smansa')->name('admin.')->middleware(['auth', 'admin'])->gr
 
     // Prestasi
     Route::resource('prestasi', PrestasiController::class)->except(['show']);
+
+    // Kalender Akademik
+    Route::get('/kalender', [\App\Http\Controllers\Admin\KalenderAkademikController::class, 'index'])->name('kalender.index');
+    Route::put('/kalender', [\App\Http\Controllers\Admin\KalenderAkademikController::class, 'update'])->name('kalender.update');
+
+    // Kurikulum
+    Route::get('/kurikulum', [\App\Http\Controllers\Admin\KurikulumController::class, 'edit'])->name('kurikulum.edit');
+    Route::put('/kurikulum', [\App\Http\Controllers\Admin\KurikulumController::class, 'update'])->name('kurikulum.update');
 
     // Pesan
     Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');

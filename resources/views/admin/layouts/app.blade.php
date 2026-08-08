@@ -90,6 +90,14 @@
             </a>
 
             <p class="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-widest text-white/35">Akademik</p>
+            <a href="{{ route('admin.kurikulum.edit') }}"
+               class="sidebar-link {{ request()->routeIs('admin.kurikulum.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-book-open w-5 text-center"></i> Kurikulum
+            </a>
+            <a href="{{ route('admin.kalender.index') }}"
+               class="sidebar-link {{ request()->routeIs('admin.kalender.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-calendar-days w-5 text-center"></i> Kalender Akademik
+            </a>
             <a href="{{ route('admin.ekstrakurikuler.index') }}"
                class="sidebar-link {{ request()->routeIs('admin.ekstrakurikuler.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-star w-5 text-center"></i> Ekstrakurikuler
