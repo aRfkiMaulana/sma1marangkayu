@@ -10,7 +10,8 @@ class AkademikController extends Controller
 {
     public function kurikulum()
     {
-        return view('public.akademik.kurikulum');
+        $kurikulum = Akademik::where('tipe', 'kurikulum')->first();
+        return view('public.akademik.kurikulum', compact('kurikulum'));
     }
 
     public function ekstrakurikuler()
